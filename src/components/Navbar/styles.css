@@ -73,6 +73,10 @@
   justify-content: center;
 }
 
+.logout-item {
+  color: rgba(214, 214, 214, 0.753);
+}
+
 @media (min-width: 576px) {
   .navbar-subcontainer {
     width: 420px;
