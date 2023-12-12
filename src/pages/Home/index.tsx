@@ -3,7 +3,7 @@ import "./styles.css";
 const Home = () => {
   return (
     <main>
-      <div></div>
+      <div>Home</div>
     </main>
   );
 };
