@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import "./styles.css";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import Switch from "react-switch";
 import { requestBackend } from "util/requests";
@@ -19,6 +19,7 @@ type FormData = {
 const Register = () => {
   const [switchState, setSwitchState] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [revealPassword, setRevealPassword] = useState(false);
 
   const handleSwitch = (state: boolean) => {
     setSwitchState(state);
@@ -33,6 +34,20 @@ const Register = () => {
     setValue,
     formState: { errors },
   } = useForm<FormData>();
+
+  const handleRevealPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+    let password = document.getElementById(
+      "register-password"
+    ) as HTMLInputElement;
+
+    setRevealPassword(!revealPassword);
+
+    if (password.type === "password" && password !== null) {
+      password.type = "text";
+    } else {
+      password.type = "password";
+    }
+  };
 
   const onSubmit = (formData: FormData) => {
     setLoading(true);
@@ -62,10 +77,8 @@ const Register = () => {
     requestBackend(params)
       .then((res) => {
         setLoading(false);
-        console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.response.data.message);
       })
       .finally(() => {
@@ -74,9 +87,9 @@ const Register = () => {
   };
 
   return (
-    <div className="login-outter-container">
+    <div className="login-outter-container register-variation">
       <span className="login-title register-title">Register</span>
-      <div className="login-inner-container register-variation">
+      <div className="login-inner-container">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="auth-input-container">
             <input
@@ -106,7 +119,7 @@ const Register = () => {
               {errors.email?.message}
             </div>
           </div>
-          <div className="auth-input-container">
+          <div className="auth-input-container password-variation">
             <input
               type="password"
               id="register-password"
@@ -116,8 +129,19 @@ const Register = () => {
                 required: "Obrigatório",
               })}
             />
+            <button
+              type="button"
+              className="password-reveal-button"
+              onClick={handleRevealPassword}
+            >
+              {revealPassword ? (
+                <i className="bi bi-eye-slash-fill" />
+              ) : (
+                <i className="bi bi-eye-fill" />
+              )}
+            </button>
             <div className="invalid-feedback d-block">
-              {errors.password?.message}
+              {errors.password?.message as ReactNode}
             </div>
           </div>
           <div className="auth-input-container id-type-container">

@@ -2,6 +2,22 @@
   justify-content: space-between;
 }
 
+.recover-send-email-variation .login-title {
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
 .recover-send-email-button {
-  margin-bottom: 150px;
+  margin-bottom: 190px;
+}
+
+@media (min-width: 1200px) {
+  .recover-send-email-variation .login-title {
+    margin-bottom: 50px;
+    margin-top: 0;
+  }
+
+  .recover-send-email-button {
+    margin-bottom: 150px;
+  }
 }

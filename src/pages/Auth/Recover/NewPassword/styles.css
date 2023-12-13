@@ -1,3 +1,9 @@
 .recover-new-password-button {
+  margin-bottom: 130px;
+}
+
+@media (min-width: 1200px) {
+  .recover-new-password-button {
     margin-bottom: 80px;
+  }
 }

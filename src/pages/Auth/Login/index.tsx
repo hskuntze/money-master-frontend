@@ -8,6 +8,7 @@ import { saveAuthData } from "util/storage";
 import { getTokenData } from "util/auth";
 import { toast } from "react-toastify";
 import Loader from "components/Loader";
+import PasswordInput from "components/PasswordInput";
 
 type FormData = {
   username: string;
@@ -72,22 +73,9 @@ const Login = () => {
               {errors.username?.message}
             </div>
           </div>
-          <div className="auth-input-container">
-            <input
-              type="password"
-              id="login-password"
-              placeholder="Password"
-              className={`auth-input ${errors.password ? "is-invalid" : ""}`}
-              {...register("password", {
-                required: "Obrigatório",
-              })}
-            />
-            <div className="invalid-feedback d-block">
-              {errors.password?.message}
-            </div>
-          </div>
+          <PasswordInput errors={errors} register={register} />
           {loading ? (
-            <div style={{marginBottom: "70px"}}>
+            <div style={{ marginBottom: "70px" }}>
               <Loader />
             </div>
           ) : (
