@@ -6,7 +6,7 @@
 }
 
 .id-type-value {
-  width: 290px;
+  width: 200px;
 }
 
 .register-title {
@@ -19,4 +19,20 @@
 
 .register-variation .auth-input-container {
   margin-bottom: 27px;
+}
+
+@media (min-width: 576px) {
+  .login-outter-container.register-variation {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .id-type-value {
+    width: 300px;
+  }
+
+  .register-variation .auth-input-container {
+    margin-bottom: 17px;
+  }
 }
