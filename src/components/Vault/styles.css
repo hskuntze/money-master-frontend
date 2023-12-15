@@ -1,0 +1,92 @@
+.vault-outter-container {
+  width: 260px;
+  height: auto;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #56a681;
+}
+
+.vault-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.vault-title {
+  font-size: 19px;
+  font-weight: 400;
+  color: #f2f0f2;
+}
+
+.vault-input {
+  width: 200px;
+  height: 50px;
+  background-color: #f2f0f2;
+  padding-left: 12px;
+  padding-top: 8px;
+  border: 0;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+}
+
+.floating-label {
+  position: relative;
+}
+
+.floating-label label {
+  position: absolute;
+  top: 15px;
+  left: 12px;
+  color: #313131;
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  top: 8px;
+  font-size: 10px;
+}
+
+.floating-label .invalid-feedback {
+  font-size: 11px;
+  margin: 5px 0px;
+}
+
+.vault-show-vault-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: right;
+}
+
+.vault-show-vault-button i {
+  color: #f2f0f2;
+}
+
+.vault-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+  margin-top: 10px;
+}
+
+.vault-button {
+  width: 80px;
+  height: 40px;
+  border-radius: 10px;
+  color: #f2f0f2;
+  font-size: 15px;
+}
+
+.vault-clear-button {
+  background-color: #d40404;
+}
+
+.vault-save-button {
+  background-color: #15f205;
+}
