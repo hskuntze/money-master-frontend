@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { AxiosRequestConfig } from "axios";
+import { requestBackend } from "util/requests";
+import { toast } from "react-toastify";
+import VaultType from "types/vault";
+import { CurrencyInput } from "react-currency-mask";
 
 type FormData = {
   savings: number;
@@ -10,54 +15,68 @@ type FormData = {
 
 const Vault = () => {
   const [showVault, setShowVault] = useState(true);
-  const [savings, setFormSavings] = useState<number>();
-  const [allowedToSpend, setFormAllowedToSpend] = useState<number>();
-  const [onWallet, setFormOnWallet] = useState<number>();
+  const [vault, setVault] = useState<VaultType>();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<FormData>();
+  const { handleSubmit, setValue, control } = useForm<FormData>();
 
   const handleToggleShowInfo = () => {
     setShowVault(!showVault);
+  };
 
-    if (showVault) {
-      let s = document.getElementById(
-        "vault-input-savings"
-      ) as HTMLInputElement;
-      s.value = "";
+  const handleClear = () => {
+    let result = window.confirm(
+      "Are you sure you want to clear it? You might lose these values if you save it!"
+    );
 
-      let a = document.getElementById(
-        "vault-input-allowed-to-spend"
-      ) as HTMLInputElement;
-      a.value = "";
-
-      let o = document.getElementById(
-        "vault-input-on-wallet"
-      ) as HTMLInputElement;
-      o.value = "";
-    } else {
-      if (savings !== undefined) {
-        setValue("savings", savings);
-      }
-      if (allowedToSpend !== undefined) {
-        setValue("allowedToSpend", allowedToSpend);
-      }
-      if (onWallet !== undefined) {
-        setValue("onWallet", onWallet);
-      }
+    if (result) {
+      setValue("allowedToSpend", 0);
+      setValue("savings", 0);
+      setValue("onWallet", 0);
     }
   };
 
   const onSubmit = (formData: FormData) => {
-    console.log(formData);
+    const params: AxiosRequestConfig = {
+      url: `/vaults/update/${vault?.id}`,
+      method: "PUT",
+      withCredentials: true,
+      data: {
+        savings: formData.savings,
+        onWallet: formData.onWallet,
+        allowedToSpend: formData.allowedToSpend,
+      },
+    };
+
+    requestBackend(params)
+      .then(() => {})
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      url: "/vaults/authenticated",
+      method: "GET",
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((res) => {
+        setVault(res.data as VaultType);
+        setValue("savings", res.data.savings);
+        setValue("allowedToSpend", res.data.allowedToSpend);
+        setValue("onWallet", res.data.onWallet);
+      })
+      .catch((err) => {
+        toast.error(
+          "Error while trying to retrieve your information. Please login again."
+        );
+      });
+  }, [setValue]);
+
   return (
-    <div className="vault-outter-container">
+    <div className="vault-outter-container box-shadow side-element">
       <div className="vault-header">
         <span className="vault-title">Vault</span>
         <button
@@ -75,73 +94,83 @@ const Vault = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="vault-inner-container">
           <div className="floating-label">
-            <input
-              type="text"
-              className="vault-input"
-              id="vault-input-savings"
-              placeholder=""
-              {...register("savings", {
-                pattern: {
-                  value: /^[0-9]+(?:\.[0-9]{1,2})?$/,
-                  message: "Only numbers and limited to two decimals",
-                },
-                onChange(event) {
-                  setFormSavings(event.target.value);
-                },
-              })}
+            <Controller
+              name="savings"
+              control={control}
+              render={({ field }) => (
+                <CurrencyInput
+                  value={showVault ? field.value : ""}
+                  onChangeValue={(_, value) => {
+                    field.onChange(value);
+                  }}
+                  InputElement={
+                    <input
+                      type="text"
+                      className="vault-input"
+                      id="vault-input-savings"
+                      placeholder=""
+                    />
+                  }
+                />
+              )}
             />
             <label htmlFor="vault-input-savings">Savings</label>
-            <div className="invalid-feedback d-block">
-              {errors.savings?.message}
-            </div>
           </div>
           <div className="floating-label">
-            <input
-              type="text"
-              className="vault-input"
-              id="vault-input-allowed-to-spend"
-              placeholder=""
-              {...register("allowedToSpend", {
-                pattern: {
-                  value: /^[0-9]+(?:\.[0-9]{1,2})?$/,
-                  message: "Only numbers and limited to two decimals",
-                },
-                onChange(event) {
-                  setFormAllowedToSpend(event.target.value);
-                },
-              })}
+            <Controller
+              name="allowedToSpend"
+              control={control}
+              render={({ field }) => (
+                <CurrencyInput
+                  value={showVault ? field.value : ""}
+                  onChangeValue={(_, value) => {
+                    field.onChange(value);
+                  }}
+                  InputElement={
+                    <input
+                      type="text"
+                      className="vault-input"
+                      id="vault-input-allowed-to-spend"
+                      placeholder=""
+                    />
+                  }
+                />
+              )}
             />
             <label htmlFor="vault-input-allowed-to-spend">
               Allowed to Spend
             </label>
-            <div className="invalid-feedback d-block">
-              {errors.allowedToSpend?.message}
-            </div>
           </div>
           <div className="floating-label">
-            <input
-              type="text"
-              className="vault-input"
-              id="vault-input-on-wallet"
-              placeholder=""
-              {...register("onWallet", {
-                pattern: {
-                  value: /^[0-9]+(?:\.[0-9]{1,2})?$/,
-                  message: "Only numbers and limited to two decimals",
-                },
-                onChange(event) {
-                  setFormOnWallet(event.target.value);
-                },
-              })}
+            <Controller
+              name="onWallet"
+              control={control}
+              render={({ field }) => (
+                <CurrencyInput
+                  value={showVault ? field.value : ""}
+                  onChangeValue={(_, value) => {
+                    field.onChange(value);
+                  }}
+                  InputElement={
+                    <input
+                      type="text"
+                      className="vault-input"
+                      id="vault-input-on-wallet"
+                      placeholder=""
+                    />
+                  }
+                />
+              )}
             />
             <label htmlFor="vault-input-on-wallet">On Wallet</label>
-            <div className="invalid-feedback d-block">
-              {errors.onWallet?.message}
-            </div>
           </div>
         </div>
         <div className="vault-button-container">
-          <button type="button" className="vault-button vault-clear-button">
+          <button
+            type="button"
+            className="vault-button vault-clear-button"
+            onClick={handleClear}
+          >
             Clear
           </button>
           <button type="submit" className="vault-button vault-save-button">

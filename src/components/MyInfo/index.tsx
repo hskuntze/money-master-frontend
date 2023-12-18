@@ -5,11 +5,16 @@ import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
 import { toast } from "react-toastify";
 import ExpenseTrack from "types/expensetrack";
+import { formatNumberToMoney } from "util/formatters";
 
 const MyInfo = () => {
   const [showInfo, setShowInfo] = useState(true);
   const [loading, setLoading] = useState(true);
   const [expenseTrack, setExpenseTrack] = useState<ExpenseTrack>();
+
+  const salaryLabel = "My salary: ";
+  const salaryPerYearLabel = "Salary per year: ";
+  const paymentDayLabel = "Payment day: ";
 
   const handleToggleShowInfo = () => {
     setShowInfo(!showInfo);
@@ -28,13 +33,14 @@ const MyInfo = () => {
         setExpenseTrack(res.data as ExpenseTrack);
       })
       .catch((err) => {
-        toast.error("Error while trying to retrieve your information");
-        console.log(err);
+        toast.error(
+          "Error while trying to retrieve your information. Please login again."
+        );
       })
       .finally(() => {
         setLoading(false);
       });
-  }
+  };
 
   useEffect(() => {
     loadInfo();
@@ -43,7 +49,7 @@ const MyInfo = () => {
   return (
     <>
       {loading ? (
-        <div className="my-info-outter-container">
+        <div className="my-info-outter-container box-shadow side-element">
           <div className="my-info-header">
             <span className="my-info-title">My Info</span>
             <div className="my-info-button-display">
@@ -66,7 +72,7 @@ const MyInfo = () => {
           <Loader />
         </div>
       ) : (
-        <div className="my-info-outter-container">
+        <div className="my-info-outter-container box-shadow side-element">
           <div className="my-info-header">
             <span className="my-info-title">My Info</span>
             <div className="my-info-button-display">
@@ -86,22 +92,29 @@ const MyInfo = () => {
               </button>
             </div>
           </div>
-          {showInfo ? (
+          {showInfo && expenseTrack ? (
             <div className="my-info-inner-container">
-              <span>My salary: R$ {expenseTrack?.monthlyIncome}</span>
-              <span>Salary per year: R$ {expenseTrack?.anualIncome}</span>
-              <span>Day of payment: {expenseTrack?.dayOfSalaryPayment}</span>
+              <span>
+                {salaryLabel} {formatNumberToMoney(expenseTrack.monthlyIncome)}
+              </span>
+              <span>
+                {salaryPerYearLabel}{" "}
+                {formatNumberToMoney(expenseTrack.anualIncome)}
+              </span>
+              <span>
+                {paymentDayLabel} {expenseTrack.dayOfSalaryPayment}
+              </span>
             </div>
           ) : (
             <div className="my-info-inner-container">
               <span>
-                My salary: R$ <i className="bi bi-three-dots" />
+                {salaryLabel} R$ <i className="bi bi-three-dots" />
               </span>
               <span>
-                Salary per year: R$ <i className="bi bi-three-dots" />
+                {salaryPerYearLabel} R$ <i className="bi bi-three-dots" />
               </span>
               <span>
-                Day of payment: <i className="bi bi-three-dots" />
+                {paymentDayLabel} <i className="bi bi-three-dots" />
               </span>
             </div>
           )}

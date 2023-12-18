@@ -1,12 +1,11 @@
 .my-info-outter-container {
-  width: 260px;
   height: 160px;
   background-color: #148c54;
   color: #f2f0f2;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  padding: 13px 0px 0px 15px;
+  padding: 15px;
 }
 
 .my-info-header {
@@ -49,7 +48,7 @@
 
 .my-info-edit-button {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   width: 40px;
   height: 40px;
   margin-left: 2px;
