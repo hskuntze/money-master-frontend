@@ -1,5 +1,4 @@
 .vault-outter-container {
-  width: 260px;
   height: auto;
   border-radius: 10px;
   padding: 15px;
@@ -19,11 +18,11 @@
 }
 
 .vault-input {
-  width: 200px;
+  width: 260px;
   height: 50px;
   background-color: #f2f0f2;
   padding-left: 12px;
-  padding-top: 8px;
+  padding-top: 10px;
   border: 0;
   border-radius: 10px;
   outline: none;
@@ -32,6 +31,7 @@
 
 .floating-label {
   position: relative;
+  margin-bottom: 7px;
 }
 
 .floating-label label {
@@ -46,7 +46,7 @@
 
 .floating-label input:focus + label,
 .floating-label input:not(:placeholder-shown) + label {
-  top: 8px;
+  top: 5px;
   font-size: 10px;
 }
 

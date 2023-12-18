@@ -1,3 +1,11 @@
+.box-shadow {
+  box-shadow: 0px 2px 10px 5px rgba(100, 100, 111, 0.2);
+}
+
+.side-element {
+  width: 300px;
+}
+
 .bi-three-dots-vertical {
   color: #f2f0f2;
   width: 20px;
