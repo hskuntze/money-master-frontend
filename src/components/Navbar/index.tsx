@@ -4,7 +4,7 @@ import Logo from "assets/images/logo-no-background.svg";
 import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "AuthContext";
 import { getTokenData, isAuthenticated } from "util/auth";
-import { removeAuthData } from "util/storage";
+import { removeAuthData, removeUserData } from "util/storage";
 
 const Navbar = () => {
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -24,6 +24,7 @@ const Navbar = () => {
     e.preventDefault();
 
     removeAuthData();
+    removeUserData();
 
     setAuthContextData({
       authenticated: false,

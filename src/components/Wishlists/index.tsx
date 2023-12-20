@@ -1,5 +1,5 @@
-import WishlistItem from "components/WishlistItem";
 import "./styles.css";
+import WishlistItem from "components/WishlistItem";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
 import { useCallback, useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { SpringPage } from "types/springpage";
 import { Wishlist } from "types/wishlist";
 import Pagination from "components/Pagination";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type ComponentData = {
   activePage: number;
@@ -39,7 +40,7 @@ const Wishlists = () => {
         setWishlists(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err);
       });
   }, [componentData]);
 

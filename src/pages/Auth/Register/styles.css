@@ -17,6 +17,10 @@
   margin-bottom: unset;
 }
 
+.register-variation {
+  height: auto;
+}
+
 .register-variation .auth-input-container {
   margin-bottom: 27px;
 }

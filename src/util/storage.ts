@@ -1,3 +1,5 @@
+import { User } from "types/user";
+
 type LoginResponse = {
   access_token: string;
   token_type: string;
@@ -17,3 +19,16 @@ export const getAuthData = () => {
 export const removeAuthData = () => {
   localStorage.removeItem("authData");
 };
+
+export const saveUserData = (obj: User) => {
+  localStorage.setItem("userData", JSON.stringify(obj));
+}
+
+export const getUserData = () => {
+  const str = localStorage.getItem("userData") ?? "{}";
+  return JSON.parse(str) as User;
+}
+
+export const removeUserData = () => {
+  localStorage.removeItem("userData");
+}

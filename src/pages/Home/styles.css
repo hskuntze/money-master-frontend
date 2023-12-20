@@ -29,3 +29,18 @@
   align-items: center;
   justify-content: space-evenly;
 }
+
+.tebm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tebm-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  height: 530px;
+  width: calc(100% - 15px);
+}
