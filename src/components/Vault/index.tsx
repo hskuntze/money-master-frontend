@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./styles.css";
 import { Controller, useForm } from "react-hook-form";
 import { AxiosRequestConfig } from "axios";
@@ -6,6 +6,8 @@ import { requestBackend } from "util/requests";
 import { toast } from "react-toastify";
 import VaultType from "types/vault";
 import { CurrencyInput } from "react-currency-mask";
+import { UserContext } from "UserContext";
+import { getUserData, saveUserData } from "util/storage";
 
 type FormData = {
   savings: number;
@@ -16,6 +18,7 @@ type FormData = {
 const Vault = () => {
   const [showVault, setShowVault] = useState(true);
   const [vault, setVault] = useState<VaultType>();
+  const { userContextData, setUserContextData } = useContext(UserContext);
 
   const { handleSubmit, setValue, control } = useForm<FormData>();
 
@@ -48,32 +51,29 @@ const Vault = () => {
     };
 
     requestBackend(params)
-      .then(() => {})
+      .then((res) => {
+        let user = getUserData();
+        user.vault = res.data as VaultType;
+        saveUserData(user);
+        setUserContextData({
+          user: user
+        });
+        toast.success("Saved");
+      })
       .catch((err) => {
         toast.error(err);
       });
   };
 
   useEffect(() => {
-    const params: AxiosRequestConfig = {
-      url: "/vaults/authenticated",
-      method: "GET",
-      withCredentials: true,
-    };
-
-    requestBackend(params)
-      .then((res) => {
-        setVault(res.data as VaultType);
-        setValue("savings", res.data.savings);
-        setValue("allowedToSpend", res.data.allowedToSpend);
-        setValue("onWallet", res.data.onWallet);
-      })
-      .catch((err) => {
-        toast.error(
-          "Error while trying to retrieve your information. Please login again."
-        );
-      });
-  }, [setValue]);
+    if (userContextData.user?.vault !== undefined) {
+      let userData = userContextData.user.vault;
+      setVault(userData);
+      setValue("allowedToSpend", userData.allowedToSpend);
+      setValue("onWallet", userData.onWallet);
+      setValue("savings", userData.savings);
+    }
+  }, [setValue, userContextData]);
 
   return (
     <div className="vault-outter-container box-shadow side-element">

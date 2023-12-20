@@ -1,14 +1,88 @@
 import "./styles.css";
+import { AxiosRequestConfig } from "axios";
 import MyInfo from "components/MyInfo";
 import Vault from "components/Vault";
 import Wishlists from "components/Wishlists";
+import { requestBackend } from "util/requests";
+import { useCallback, useEffect, useState } from "react";
+import { TotalExpenseByMonth as TotalExpenseByMonthType } from "types/totalexpensebymonth";
+import { SpringPage } from "types/springpage";
+import { toast } from "react-toastify";
+import TotalExpenseByMonth from "components/TotalExpenseByMonth";
+import { getMonthNameFromDate } from "util/formatters";
+import Pagination from "components/Pagination";
+
+type TebmComponentData = {
+  activePage: number;
+};
 
 const Home = () => {
+  const [tebms, setTebms] = useState<SpringPage<TotalExpenseByMonthType>>();
+  const [tebmComponentData, setTebmComponentData] = useState<TebmComponentData>(
+    {
+      activePage: 0,
+    }
+  );
+
+  /**
+   * Responsible for loading the TotalExpenseByMonth's
+   */
+  const loadTebms = useCallback(() => {
+    const params: AxiosRequestConfig = {
+      url: "/totalExpenseByMonths/authenticated",
+      withCredentials: true,
+      method: "GET",
+      params: {
+        sort: "date",
+        size: 3,
+        sortExpenses: true,
+        sortExpenseAttribute: "price",
+        page: tebmComponentData.activePage,
+      },
+    };
+
+    requestBackend(params)
+      .then((res) => {
+        setTebms(res.data);
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  }, [tebmComponentData]);
+
+  useEffect(() => {
+    loadTebms();
+  }, [loadTebms]);
+
+  const handlePageChange = (pageNumber: number) => {
+    setTebmComponentData({
+      activePage: pageNumber,
+    });
+  };
+
   return (
     <main id="main" className="main-page">
       <section id="main-section" className="main-section">
         <div className="main-content">
-          <span>home</span>
+          <div className="tebm-container">
+            <div className="tebm-content">
+              {tebms?.content.map((tebm) => (
+                <TotalExpenseByMonth
+                  date={tebm.date}
+                  remainingAmount={tebm.remainingAmount}
+                  title={getMonthNameFromDate(tebm.date)}
+                  variableExpenses={tebm.variableExpenses.reverse()}
+                />
+              ))}
+            </div>
+            <Pagination
+              pageCount={tebms ? tebms.totalPages : 0}
+              forcePage={tebms?.number}
+              range={2}
+              onChange={handlePageChange}
+              width={300}
+            />
+          </div>
         </div>
       </section>
       <aside id="side-section" className="side-section">

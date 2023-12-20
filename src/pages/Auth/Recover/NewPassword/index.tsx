@@ -5,9 +5,11 @@ import Loader from "components/Loader";
 import { AxiosRequestConfig } from "axios";
 import { useParams } from "react-router-dom";
 import { requestBackend } from "util/requests";
+import { toast } from "react-toastify";
 
 type FormData = {
   password: string;
+  confirmPassword: string;
 };
 
 type UrlParams = {
@@ -23,6 +25,7 @@ const NewPassword = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch
   } = useForm<FormData>();
 
   const handleRevealPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -60,9 +63,12 @@ const NewPassword = () => {
     requestBackend(params)
       .then((res) => {
         console.log(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err.response.data.message);
+        setLoading(false);
       });
   };
 
@@ -78,7 +84,15 @@ const NewPassword = () => {
               placeholder="Password"
               className={`auth-input ${errors.password ? "is-invalid" : ""}`}
               {...register("password", {
-                required: "Obrigatório",
+                required: "Required",
+                minLength: {
+                  value: 6,
+                  message: "At least 6 characters required",
+                },
+                maxLength: {
+                  value: 48,
+                  message: "Maximum of 48 characters",
+                },
               })}
             />
             <button
@@ -102,8 +116,17 @@ const NewPassword = () => {
               id="recover-confirm-password"
               placeholder="Confirm Password"
               className={`auth-input ${errors.password ? "is-invalid" : ""}`}
-              {...register("password", {
-                required: "Obrigatório",
+              {...register("confirmPassword", {
+                required: "Required",
+                minLength: {
+                  value: 6,
+                  message: "At least 6 characters required",
+                },
+                maxLength: {
+                  value: 48,
+                  message: "Maximum of 48 characters",
+                },
+                validate: (value: string) => watch("password") !== value || "Passwords are not matching"
               })}
             />
             <div className="invalid-feedback d-block">

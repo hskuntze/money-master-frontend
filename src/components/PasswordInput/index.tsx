@@ -36,7 +36,7 @@ const PasswordInput = ({ errors, register }: Props) => {
         placeholder="Password"
         className={`auth-input ${errors.password ? "is-invalid" : ""}`}
         {...register("password", {
-          required: "Obrigatório",
+          required: "Required",
         })}
       />
       <button

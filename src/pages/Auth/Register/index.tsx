@@ -6,6 +6,8 @@ import Switch from "react-switch";
 import { requestBackend } from "util/requests";
 import { toast } from "react-toastify";
 import Loader from "components/Loader";
+import { useNavigate } from "react-router-dom";
+import ReactInputMask from "react-input-mask";
 
 type FormData = {
   name: string;
@@ -20,6 +22,7 @@ const Register = () => {
   const [switchState, setSwitchState] = useState(false);
   const [loading, setLoading] = useState(false);
   const [revealPassword, setRevealPassword] = useState(false);
+  const navigation = useNavigate();
 
   const handleSwitch = (state: boolean) => {
     setSwitchState(state);
@@ -57,26 +60,14 @@ const Register = () => {
       method: "POST",
       data: {
         ...formData,
-        roles: [{ id: 1 }],
-        address: {
-          addressLine: "SQS 411 Bloco F",
-          number: "212",
-          district: "Asa Sul",
-          state: "Distrito Federal",
-          city: "Brasilia",
-          zipCode: "70277-060",
-          country: "Brasil",
-          additionalDetails: "none",
-          addressType: 1,
-        },
-        birth: "1999-03-03",
-        gender: 1,
+        roles: [{ id: 2 }],
       },
     };
 
     requestBackend(params)
       .then((res) => {
         setLoading(false);
+        navigation("/auth");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -98,7 +89,7 @@ const Register = () => {
               placeholder="Name"
               className={`auth-input ${errors.name ? "is-invalid" : ""}`}
               {...register("name", {
-                required: "Obrigatório",
+                required: "Required",
               })}
             />
             <div className="invalid-feedback d-block">
@@ -112,7 +103,11 @@ const Register = () => {
               placeholder="Email"
               className={`auth-input ${errors.email ? "is-invalid" : ""}`}
               {...register("email", {
-                required: "Obrigatório",
+                required: "Required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid e-mail",
+                },
               })}
             />
             <div className="invalid-feedback d-block">
@@ -126,7 +121,15 @@ const Register = () => {
               placeholder="Password"
               className={`auth-input ${errors.password ? "is-invalid" : ""}`}
               {...register("password", {
-                required: "Obrigatório",
+                required: "Required",
+                minLength: {
+                  value: 6,
+                  message: "At least 6 characters required",
+                },
+                maxLength: {
+                  value: 48,
+                  message: "Maximum of 48 characters",
+                },
               })}
             />
             <button
@@ -154,31 +157,63 @@ const Register = () => {
               offColor="#6E817A"
               handleDiameter={30}
             />
-            <div>
-              <input
-                type="text"
-                id="register-password"
-                placeholder={switchState ? "CPF" : "CNPJ"}
-                className={`auth-input id-type-value ${
-                  errors.password ? "is-invalid" : ""
-                }`}
-                {...register("idNumber", {
-                  required: "Obrigatório",
-                })}
-              />
-              <div className="invalid-feedback d-block">
-                {errors.password?.message}
+            {switchState ? (
+              <div>
+                <ReactInputMask
+                  type="text"
+                  id="register-id-type"
+                  mask={"999.999.999-99"}
+                  alwaysShowMask={false}
+                  placeholder="CPF"
+                  className={`auth-input id-type-value ${
+                    errors.idNumber ? "is-invalid" : ""
+                  }`}
+                  {...register("idNumber", {
+                    required: "Required",
+                    pattern: {
+                      value: /([0-9]{2}[.]?[0-9]{3}[.]?[0-9]{3}[/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})/i,
+                      message: "Only numbers",
+                    },
+                  })}
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.idNumber?.message}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div>
+                <ReactInputMask
+                  type="text"
+                  id="register-id-type"
+                  mask={"99.999.999/9999-99"}
+                  alwaysShowMask={false}
+                  placeholder="CNPJ"
+                  className={`auth-input id-type-value ${
+                    errors.idNumber ? "is-invalid" : ""
+                  }`}
+                  {...register("idNumber", {
+                    required: "Required",
+                    pattern: {
+                      value: /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/,
+                      message: "Only numbers",
+                    }
+                  })}
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.idNumber?.message}
+                </div>
+              </div>
+            )}
           </div>
           <div className="auth-input-container">
-            <input
-              type="text"
+            <ReactInputMask
+              type="tel"
               id="register-phone-number"
+              mask={"(99) 9 9999-9999"}
               placeholder="Phone Number"
               className={`auth-input ${errors.phoneNumber ? "is-invalid" : ""}`}
               {...register("phoneNumber", {
-                required: "Obrigatório",
+                required: "Required",
               })}
             />
             <div className="invalid-feedback d-block">
