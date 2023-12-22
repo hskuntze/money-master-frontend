@@ -4,6 +4,7 @@ import { formatNumberToMoney, formatStringToDate } from "util/formatters";
 import { useEffect, useState } from "react";
 
 interface Props {
+  id: number;
   title: string;
   date: string;
   remainingAmount: number;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const TotalExpenseByMonth = ({
+  id,
   date,
   title,
   remainingAmount,
@@ -32,10 +34,10 @@ const TotalExpenseByMonth = ({
     if (!showMoreMessage) {
       shouldShowMoreMessage();
     }
-  }, [showMoreMessage]);
+  }, [showMoreMessage, title]);
 
   return (
-    <div className="tebm-outter-container">
+    <div id={`tebm-${id}`} className="tebm-outter-container">
       <div className="tebm-header">
         <span className="tebm-title">Total Expense - {title}</span>
         <span className="tebm-subtitle">
@@ -44,9 +46,9 @@ const TotalExpenseByMonth = ({
       </div>
       <div id="tebm-inner-container" className="tebm-inner-container">
         {variableExpenses.map((ve) => (
-          <div className="tebm-variable-expense">
+          <div className="tebm-variable-expense" key={ve.id}>
             <span>
-              {ve.title} - {formatStringToDate(ve.dateOfCharge)} - {formatNumberToMoney(ve.price)}
+              [{formatStringToDate(ve.dateOfCharge)}] {ve.title}, {formatNumberToMoney(ve.price)}
             </span>
           </div>
         ))}

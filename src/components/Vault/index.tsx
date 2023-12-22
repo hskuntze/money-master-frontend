@@ -16,6 +16,7 @@ type FormData = {
 };
 
 const Vault = () => {
+  const [edit, setEdit] = useState(false);
   const [showVault, setShowVault] = useState(true);
   const [vault, setVault] = useState<VaultType>();
   const { userContextData, setUserContextData } = useContext(UserContext);
@@ -38,31 +39,39 @@ const Vault = () => {
     }
   };
 
-  const onSubmit = (formData: FormData) => {
-    const params: AxiosRequestConfig = {
-      url: `/vaults/update/${vault?.id}`,
-      method: "PUT",
-      withCredentials: true,
-      data: {
-        savings: formData.savings,
-        onWallet: formData.onWallet,
-        allowedToSpend: formData.allowedToSpend,
-      },
-    };
+  const handleEdit = () => {
+    setEdit(!edit);
+  };
 
-    requestBackend(params)
-      .then((res) => {
-        let user = getUserData();
-        user.vault = res.data as VaultType;
-        saveUserData(user);
-        setUserContextData({
-          user: user
+  const onSubmit = (formData: FormData) => {
+    if(formData.allowedToSpend >= 0) {
+      const params: AxiosRequestConfig = {
+        url: `/vaults/update/${vault?.id}`,
+        method: "PUT",
+        withCredentials: true,
+        data: {
+          savings: formData.savings,
+          onWallet: formData.onWallet,
+          allowedToSpend: formData.allowedToSpend,
+        },
+      };
+  
+      requestBackend(params)
+        .then((res) => {
+          let user = getUserData();
+          user.vault = res.data as VaultType;
+          saveUserData(user);
+          setUserContextData({
+            user: user,
+          });
+          toast.success("Saved");
+        })
+        .catch((err) => {
+          toast.error(err);
         });
-        toast.success("Saved");
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
+    } else {
+      toast.error("Negative values are not allowed");
+    }
   };
 
   useEffect(() => {
@@ -79,17 +88,26 @@ const Vault = () => {
     <div className="vault-outter-container box-shadow side-element">
       <div className="vault-header">
         <span className="vault-title">Vault</span>
-        <button
-          className="vault-show-vault-button"
-          type="button"
-          onClick={handleToggleShowInfo}
-        >
-          {showVault ? (
-            <i className="bi bi-eye-slash-fill" />
-          ) : (
-            <i className="bi bi-eye-fill" />
-          )}
-        </button>
+        <div className="vault-button-display">
+          <button
+            className="vault-show-vault-button"
+            type="button"
+            onClick={handleToggleShowInfo}
+          >
+            {showVault ? (
+              <i className="bi bi-eye-slash-fill" />
+            ) : (
+              <i className="bi bi-eye-fill" />
+            )}
+          </button>
+          <button
+            className="vault-edit-button"
+            type="button"
+            onClick={handleEdit}
+          >
+            <i className="bi bi-pencil-square" />
+          </button>
+        </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="vault-inner-container">
@@ -105,6 +123,7 @@ const Vault = () => {
                   }}
                   InputElement={
                     <input
+                      disabled={edit ? false : true}
                       type="text"
                       className="vault-input"
                       id="vault-input-savings"
@@ -128,6 +147,7 @@ const Vault = () => {
                   }}
                   InputElement={
                     <input
+                      disabled={edit ? false : true}
                       type="text"
                       className="vault-input"
                       id="vault-input-allowed-to-spend"
@@ -153,6 +173,7 @@ const Vault = () => {
                   }}
                   InputElement={
                     <input
+                      disabled={edit ? false : true}
                       type="text"
                       className="vault-input"
                       id="vault-input-on-wallet"
@@ -165,18 +186,22 @@ const Vault = () => {
             <label htmlFor="vault-input-on-wallet">On Wallet</label>
           </div>
         </div>
-        <div className="vault-button-container">
-          <button
-            type="button"
-            className="vault-button vault-clear-button"
-            onClick={handleClear}
-          >
-            Clear
-          </button>
-          <button type="submit" className="vault-button vault-save-button">
-            Save
-          </button>
-        </div>
+        {edit ? (
+          <div className="vault-button-container">
+            <button
+              type="button"
+              className="vault-button vault-clear-button"
+              onClick={handleClear}
+            >
+              Clear
+            </button>
+            <button type="submit" className="vault-button vault-save-button">
+              Save
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
       </form>
     </div>
   );

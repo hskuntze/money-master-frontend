@@ -5,11 +5,13 @@ import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "AuthContext";
 import { getTokenData, isAuthenticated } from "util/auth";
 import { removeAuthData, removeUserData } from "util/storage";
+import { ThemeContext } from "ThemeContext";
 
 const Navbar = () => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const { authContextData, setAuthContextData } = useContext(AuthContext);
+  const { themeContextData, setThemeContextData } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const handleMenuToggle = () => {
@@ -17,6 +19,20 @@ const Navbar = () => {
 
     if (menu) {
       menu.classList.toggle("open");
+    }
+  };
+
+  const handleThemeToggle = () => {
+    setThemeContextData({
+      theme: themeContextData.theme === "light" ? "dark" : "light",
+    });
+
+    const root = document.getElementById("root") as HTMLDivElement;
+
+    if(themeContextData.theme === "light") {
+      root.style.backgroundColor = "#434343";
+    } else {
+      root.style.backgroundColor = "#F2F0F2";
     }
   };
 
@@ -76,7 +92,7 @@ const Navbar = () => {
           </NavLink>
           {authContextData.authenticated ? (
             <a href="logout" onClick={handleLogout}>
-                <li className="nav-item logout-item">Logout</li>
+              <li className="nav-item logout-item">Logout</li>
             </a>
           ) : (
             <NavLink to={"/auth"}>
@@ -85,7 +101,12 @@ const Navbar = () => {
           )}
         </ul>
         <hr className="nav-divisor" />
-        <button type="button" className="theme-button" id="theme-button">
+        <button
+          type="button"
+          className="theme-button"
+          id="theme-button"
+          onClick={handleThemeToggle}
+        >
           <i className="bi bi-lightbulb-fill" />
         </button>
       </div>
