@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import TotalExpenseByMonth from "components/TotalExpenseByMonth";
 import { getMonthNameFromDate } from "util/formatters";
 import Pagination from "components/Pagination";
+import HomePageFixedExpense from "components/HomePageFixedExpense";
 
 type TebmComponentData = {
   activePage: number;
@@ -64,10 +65,17 @@ const Home = () => {
     <main id="main" className="main-page">
       <section id="main-section" className="main-section">
         <div className="main-content">
+          <div className="hpfe-container">
+            <div className="hpfe-content">
+              <HomePageFixedExpense />
+            </div>
+          </div>
           <div className="tebm-container">
             <div className="tebm-content">
               {tebms?.content.map((tebm) => (
                 <TotalExpenseByMonth
+                  key={tebm.id}
+                  id={tebm.id}
                   date={tebm.date}
                   remainingAmount={tebm.remainingAmount}
                   title={getMonthNameFromDate(tebm.date)}

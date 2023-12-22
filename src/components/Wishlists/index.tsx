@@ -8,6 +8,7 @@ import { Wishlist } from "types/wishlist";
 import Pagination from "components/Pagination";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { saveWishlistData } from "util/storage";
 
 type ComponentData = {
   activePage: number;
@@ -38,6 +39,7 @@ const Wishlists = () => {
     requestBackend(params)
       .then((res) => {
         setWishlists(res.data);
+        saveWishlistData(res.data.content);
       })
       .catch((err) => {
         toast.error(err);

@@ -53,3 +53,37 @@
   height: 40px;
   margin-left: 2px;
 }
+
+.my-info-edit-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.my-info-edit-field span {
+  margin: 0;
+}
+
+.my-info-edit-field input {
+  width: 180px;
+  height: 21px;
+  border: 0;
+  background-color: #f2f0f2;
+  border-radius: 4px;
+  color: #313131;
+  font-size: 13px;
+  padding-left: 5px;
+}
+
+.my-info-edit-field-button {
+  position: absolute;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  right: 5px;
+  color: #148c54;
+  width: 40px;
+  height: 40px;
+}
