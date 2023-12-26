@@ -1,6 +1,4 @@
 .tebm-outter-container {
-  max-width: 30%;
-  width: 30%;
   margin: 0 1.5%;
   height: 500px;
   background-color: #56a681;
@@ -40,11 +38,24 @@
 
 .tebm-inner-container {
   height: 70%;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.tebm-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hold-expansion {
+  overflow: hidden;
+}
+
+.dont-hold-expansion {
+  overflow: scroll;
 }
 
 .tebm-variable-expense {
