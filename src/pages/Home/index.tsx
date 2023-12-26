@@ -62,7 +62,7 @@ const Home = () => {
   };
 
   return (
-    <main id="main" className="main-page">
+    <>
       <section id="main-section" className="main-section">
         <div className="main-content">
           <div className="hpfe-container">
@@ -80,6 +80,8 @@ const Home = () => {
                   remainingAmount={tebm.remainingAmount}
                   title={getMonthNameFromDate(tebm.date)}
                   variableExpenses={tebm.variableExpenses.reverse()}
+                  width={30}
+                  holdExpansion={true}
                 />
               ))}
             </div>
@@ -98,7 +100,7 @@ const Home = () => {
         <Vault />
         <Wishlists />
       </aside>
-    </main>
+    </>
   );
 };
 

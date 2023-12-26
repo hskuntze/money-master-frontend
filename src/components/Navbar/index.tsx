@@ -87,7 +87,7 @@ const Navbar = () => {
           <NavLink to={"/"}>
             <li className="nav-item">Wishlists</li>
           </NavLink>
-          <NavLink to={"/"}>
+          <NavLink to={"/expensetrack"}>
             <li className="nav-item">Expense Track</li>
           </NavLink>
           {authContextData.authenticated ? (

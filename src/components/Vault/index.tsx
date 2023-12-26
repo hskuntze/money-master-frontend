@@ -43,8 +43,26 @@ const Vault = () => {
     setEdit(!edit);
   };
 
+  const calculateAllowedToSpend = (): number | string => {
+    if (
+      userContextData.user?.expenseTrack !== undefined &&
+      vault !== undefined
+    ) {
+      let sum: number = 0;
+      const tebms = userContextData.user.expenseTrack.totalExpenseByMonths;
+      const lastTebm = tebms[tebms.length - 1];
+      lastTebm.variableExpenses.forEach((ve) => {
+        sum += ve.price;
+      });
+
+      return vault.allowedToSpend - sum;
+    }
+
+    return "";
+  };
+
   const onSubmit = (formData: FormData) => {
-    if(formData.allowedToSpend >= 0) {
+    if (formData.allowedToSpend >= 0) {
       const params: AxiosRequestConfig = {
         url: `/vaults/update/${vault?.id}`,
         method: "PUT",
@@ -55,7 +73,7 @@ const Vault = () => {
           allowedToSpend: formData.allowedToSpend,
         },
       };
-  
+
       requestBackend(params)
         .then((res) => {
           let user = getUserData();
@@ -64,6 +82,7 @@ const Vault = () => {
           setUserContextData({
             user: user,
           });
+          setEdit(false);
           toast.success("Saved");
         })
         .catch((err) => {
@@ -141,7 +160,13 @@ const Vault = () => {
               control={control}
               render={({ field }) => (
                 <CurrencyInput
-                  value={showVault ? field.value : ""}
+                  value={
+                    showVault
+                      ? edit
+                        ? field.value
+                        : calculateAllowedToSpend()
+                      : ""
+                  }
                   onChangeValue={(_, value) => {
                     field.onChange(value);
                   }}

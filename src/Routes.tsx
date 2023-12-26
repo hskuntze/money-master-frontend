@@ -5,6 +5,7 @@ import Auth from "pages/Auth";
 import Home from "pages/Home";
 import { useState } from "react";
 import { ThemeContext, ThemeContextData } from "ThemeContext";
+import ExpenseTrackPage from "pages/ExpenseTrack";
 
 const Routes = () => {
   const [themeContextData, setThemeContextData] = useState<ThemeContextData>({
@@ -13,16 +14,19 @@ const Routes = () => {
 
   return (
     <BrowserRouter>
-      <ThemeContext.Provider value={{themeContextData, setThemeContextData}}>
+      <ThemeContext.Provider value={{ themeContextData, setThemeContextData }}>
         <Navbar />
-        <Switch>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth/*" element={<Auth />} />
-          <Route
-            path="/confirmregistration"
-            element={<ConfirmRegistration />}
-          />
-        </Switch>
+        <main id="main" className="main-page">
+          <Switch>
+            <Route path="/" element={<Home />} />
+            <Route path="/auth/*" element={<Auth />} />
+            <Route
+              path="/confirmregistration"
+              element={<ConfirmRegistration />}
+            />
+            <Route path="/expensetrack" element={<ExpenseTrackPage />} />
+          </Switch>
+        </main>
       </ThemeContext.Provider>
     </BrowserRouter>
   );
