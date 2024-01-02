@@ -21,7 +21,7 @@ const HomePageFixedExpense = () => {
 
   const loadInfo = useCallback(() => {
     const params: AxiosRequestConfig = {
-      url: "/totalExpenseByMonths/findAll/fixedExpenses",
+      url: "/totalExpenseByMonths/findAll/fixedExpenses/validdate",
       method: "GET",
       withCredentials: true,
       params: {

@@ -12,12 +12,15 @@ import TotalExpenseByMonth from "components/TotalExpenseByMonth";
 import { getMonthNameFromDate } from "util/formatters";
 import Pagination from "components/Pagination";
 import HomePageFixedExpense from "components/HomePageFixedExpense";
+import { useNavigate } from "react-router-dom";
+import { getTokenData } from "util/auth";
 
 type TebmComponentData = {
   activePage: number;
 };
 
 const Home = () => {
+  const navigate = useNavigate();
   const [tebms, setTebms] = useState<SpringPage<TotalExpenseByMonthType>>();
   const [tebmComponentData, setTebmComponentData] = useState<TebmComponentData>(
     {
@@ -52,8 +55,12 @@ const Home = () => {
   }, [tebmComponentData]);
 
   useEffect(() => {
+    if (getTokenData() === undefined) {
+      navigate("/auth");
+    }
+
     loadTebms();
-  }, [loadTebms]);
+  }, [loadTebms, navigate]);
 
   const handlePageChange = (pageNumber: number) => {
     setTebmComponentData({

@@ -10,6 +10,13 @@
   color: #F2F0F2;
 }
 
+.expense-track-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
 .expense-track-page-inner-container {
   display: flex;
   flex-wrap: wrap;

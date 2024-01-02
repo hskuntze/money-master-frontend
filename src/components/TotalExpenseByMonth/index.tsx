@@ -1,6 +1,7 @@
 import { VariableExpense } from "types/variableexpense";
 import "./styles.css";
 import { formatNumberToMoney, formatStringToDate } from "util/formatters";
+import { useCallback, useEffect, useState } from "react";
 
 interface Props {
   id: number;
@@ -21,6 +22,24 @@ const TotalExpenseByMonth = ({
   width,
   holdExpansion,
 }: Props) => {
+  const [showMoreMessage, setShowMoreMessage] = useState(false);
+
+  const shouldShowMoreMessage = useCallback(() => {
+    const innerContainer = document.getElementById(
+      `tebm-inner-container-${id}`
+    ) as HTMLDivElement;
+
+    if (innerContainer.clientWidth > 0) {
+      setShowMoreMessage(true);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (!showMoreMessage) {
+      shouldShowMoreMessage();
+    }
+  }, [showMoreMessage, shouldShowMoreMessage]);
+
   return (
     <div
       id={`tebm-${id}`}
@@ -35,7 +54,7 @@ const TotalExpenseByMonth = ({
           </span>
         </div>
         <div
-          id="tebm-inner-container"
+          id={`tebm-inner-container-${id}`}
           className={
             holdExpansion
               ? "tebm-inner-container hold-expansion"
@@ -51,7 +70,7 @@ const TotalExpenseByMonth = ({
             </div>
           ))}
         </div>
-        {holdExpansion && (
+        {holdExpansion && showMoreMessage && (
           <span className="show-more-message">...and more</span>
         )}
         <div className="tebm-footer">
