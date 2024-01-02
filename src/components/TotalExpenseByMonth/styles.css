@@ -38,6 +38,7 @@
 
 .tebm-inner-container {
   height: 70%;
+  max-height: 70%;
   display: flex;
   align-items: center;
   justify-content: center;

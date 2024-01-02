@@ -11,7 +11,7 @@ type Props = {
 const PieChart = ({ name, labels = [], series = [], width }: Props) => {
   return (
     <div className="pie-chart-card-container" style={{width: width + "%"}}>
-      <label className="pie-chart-label" htmlFor={`pie-chart-${name}`}>{name}</label>
+      <label className="pie-chart-label" htmlFor={`#pie-chart-${name}`}>{name}</label>
       <ReactApexChart
         type="pie"
         width={300}
