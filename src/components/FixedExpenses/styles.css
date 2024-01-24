@@ -28,7 +28,6 @@
   color: #f2f0f2;
   background-color: #03ad5e;
   border-radius: 10px;
-  width: calc(100% / 6);
   height: 150px;
 }
 
@@ -46,4 +45,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.hpfe-edit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixed-expense-edit-input {
+  width: 90%;
+  height: 28px;
+  border: 0;
+  border-radius: 5px;
+  margin: 2.5px 0;
+  padding-left: 10px;
+  color: #313131;
+  background-color: #f2f0f2;
+  font-size: 14px;
+}
+
+.hpfe-edit-container button {
+  margin-top: 5px;
+  width: 40px;
+  height: 20px;
 }

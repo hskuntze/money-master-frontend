@@ -8,11 +8,36 @@ type Props = {
   series: ColumnChartConfig[];
   width: number;
   type: "numeric" | "datetime" | "category";
+  topLeftBorder?: number;
+  topRightBorder?: number;
+  bottomLeftBorder?: number;
+  bottomRightBorder?: number;
+  margin?: string;
 };
 
-const ColumnChart = ({ name, series = [], width, type }: Props) => {
+const ColumnChart = ({
+  name,
+  series = [],
+  width,
+  type,
+  bottomLeftBorder,
+  bottomRightBorder,
+  topLeftBorder,
+  topRightBorder,
+  margin,
+}: Props) => {
   return (
-    <div className="column-chart-card-container" style={{ width: width + "%" }}>
+    <div
+      className="column-chart-card-container"
+      style={{
+        width: width + "%",
+        borderBottomLeftRadius: bottomLeftBorder,
+        borderBottomRightRadius: bottomRightBorder,
+        borderTopLeftRadius: topLeftBorder,
+        borderTopRightRadius: topRightBorder,
+        margin: margin,
+      }}
+    >
       <label htmlFor={`#column-chart-${name}`} className="column-chart-label">
         {name}
       </label>
@@ -126,7 +151,11 @@ const ColumnChart = ({ name, series = [], width, type }: Props) => {
               type: type,
               labels: {
                 formatter: function (val: string) {
-                  return getMonthNameFromDate(val);
+                  return (
+                    getMonthNameFromDate(val) +
+                    " " +
+                    String(val).substring(0, 4)
+                  );
                 },
               },
             },
