@@ -46,7 +46,7 @@ const Navbar = () => {
       authenticated: false,
     });
 
-    navigate("/");
+    navigate("/auth");
   };
 
   useEffect(() => {

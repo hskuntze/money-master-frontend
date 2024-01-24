@@ -12,9 +12,22 @@
 
 .expense-track-header {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.expense-track-header .hpfe-outter-container {
+  margin: 0 auto;
+}
+
+.expense-track-header-charts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin-top: 10px;
 }
 
 .expense-track-page-inner-container {
@@ -24,9 +37,44 @@
 }
 
 .expense-track-item {
+  padding: 5px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  width: 50%;
-  margin: 15px 0;
+  width: 48%;
+  margin: 5px;
+}
+
+.manage-button {
+  width: 250px;
+  height: 45px;
+  background-color: #03ad5e;
+  margin-right: 15px;
+  padding: 5px;
+  font-size: 0.9em;
+  border-radius: 10px;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.manage-button:hover {
+  background-color: #08a35b;
+}
+
+.edit-variable-expenses-section {
+  width: calc(97% + 10px);
+  margin: 10px auto;
+}
+
+.edit-variable-expense-group-container {
+  margin: 10px 0;
+}
+
+.edit-variable-expense-group-container h2 {
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.edit-variable-expense-group {
+  display: flex;
+  flex-wrap: wrap;
 }

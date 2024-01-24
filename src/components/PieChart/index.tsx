@@ -6,12 +6,39 @@ type Props = {
   name: string;
   series: number[];
   width: number;
+  topLeftBorder?: number;
+  topRightBorder?: number;
+  bottomLeftBorder?: number;
+  bottomRightBorder?: number;
+  margin?: string;
 };
 
-const PieChart = ({ name, labels = [], series = [], width }: Props) => {
+const PieChart = ({
+  name,
+  labels = [],
+  series = [],
+  width,
+  topLeftBorder,
+  topRightBorder,
+  bottomLeftBorder,
+  bottomRightBorder,
+  margin
+}: Props) => {
   return (
-    <div className="pie-chart-card-container" style={{width: width + "%"}}>
-      <label className="pie-chart-label" htmlFor={`#pie-chart-${name}`}>{name}</label>
+    <div
+      className="pie-chart-card-container"
+      style={{
+        width: width + "%",
+        borderBottomLeftRadius: bottomLeftBorder,
+        borderBottomRightRadius: bottomRightBorder,
+        borderTopLeftRadius: topLeftBorder,
+        borderTopRightRadius: topRightBorder,
+        margin: margin
+      }}
+    >
+      <label className="pie-chart-label" htmlFor={`#pie-chart-${name}`}>
+        {name}
+      </label>
       <ReactApexChart
         type="pie"
         width={300}
@@ -79,8 +106,8 @@ const PieChart = ({ name, labels = [], series = [], width }: Props) => {
               horizontal: 7,
             },
             onItemHover: {
-              highlightDataSeries: true
-            }
+              highlightDataSeries: true,
+            },
           },
           dataLabels: {
             enabled: false,

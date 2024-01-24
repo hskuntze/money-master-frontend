@@ -3,6 +3,6 @@ export type FixedExpense = {
   title: string;
   price: number;
   dayOfCharge: string;
-  beginfOfExpense: string;
+  beginOfExpense: string;
   endOfExpense: string;
 };

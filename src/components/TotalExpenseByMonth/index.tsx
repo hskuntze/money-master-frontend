@@ -11,6 +11,11 @@ interface Props {
   variableExpenses: VariableExpense[];
   width: number;
   holdExpansion: boolean;
+  topLeftBorder?: number;
+  topRightBorder?: number;
+  bottomLeftBorder?: number;
+  bottomRightBorder?: number;
+  margin?: string;
 }
 
 const TotalExpenseByMonth = ({
@@ -21,6 +26,11 @@ const TotalExpenseByMonth = ({
   variableExpenses,
   width,
   holdExpansion,
+  bottomLeftBorder,
+  bottomRightBorder,
+  topLeftBorder,
+  topRightBorder,
+  margin,
 }: Props) => {
   const [showMoreMessage, setShowMoreMessage] = useState(false);
 
@@ -44,7 +54,15 @@ const TotalExpenseByMonth = ({
     <div
       id={`tebm-${id}`}
       className="tebm-outter-container"
-      style={{ width: width + "%", maxWidth: width + "%" }}
+      style={{
+        width: width + "%",
+        maxWidth: width + "%",
+        borderBottomLeftRadius: bottomLeftBorder,
+        borderBottomRightRadius: bottomRightBorder,
+        borderTopLeftRadius: topLeftBorder,
+        borderTopRightRadius: topRightBorder,
+        margin: margin,
+      }}
     >
       <div className="tebm-content">
         <div className="tebm-header">

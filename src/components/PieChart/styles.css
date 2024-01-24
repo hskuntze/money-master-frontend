@@ -2,11 +2,13 @@
   background-color: #02733e;
   border-radius: 10px;
   height: auto;
+  min-height: 100%;
   padding: 10px;
   margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .pie-chart-label {

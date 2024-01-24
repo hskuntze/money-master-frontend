@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import TotalExpenseByMonth from "components/TotalExpenseByMonth";
 import { getMonthNameFromDate } from "util/formatters";
 import Pagination from "components/Pagination";
-import HomePageFixedExpense from "components/HomePageFixedExpense";
+import FixedExpenses from "components/FixedExpenses";
 import { useNavigate } from "react-router-dom";
 import { getTokenData } from "util/auth";
 
@@ -74,7 +74,7 @@ const Home = () => {
         <div className="main-content">
           <div className="hpfe-container">
             <div className="hpfe-content">
-              <HomePageFixedExpense />
+              <FixedExpenses editable={false} />
             </div>
           </div>
           <div className="tebm-container">

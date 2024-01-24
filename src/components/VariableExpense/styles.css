@@ -1,0 +1,100 @@
+.variable-expense-container {
+  width: 49%;
+  min-height: 90px;
+  max-height: 180px;
+  border-radius: 10px;
+  background-color: #03ad5e;
+  margin: 0.5%;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.variable-expense-header h4 {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.variable-expense-header span {
+  font-size: 0.8em;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+
+.variable-expense-content {
+  min-height: 30px;
+}
+
+.variable-expense-header-buttons {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.variable-expense-header-btt {
+  margin-left: 5px;
+}
+
+.variable-expense-header-btt i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 1.15em;
+}
+
+.variable-expense-aux-div {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.variable-expense-aux-div :nth-child(3) {
+  margin-left: 12px;
+}
+
+.variable-expense-aux-div h4 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.variable-expense-aux-div-2 {
+  display: flex;
+  align-items: center;
+}
+
+.variable-expense-edit-input {
+  width: calc(50% - 12px);
+  height: 32px;
+  margin-right: 12px;
+  margin-top: 2.5px;
+  margin-bottom: 2.5px;
+  background-color: #f2f0f2;
+  border: 0;
+  border-radius: 10px;
+  padding-left: 10px;
+  color: #313131;
+}
+
+.variable-expense-edit-save-button svg {
+  margin-left: 5px;
+}
+
+#check-icon {
+  height: 25px;
+  width: auto;
+  stroke: #fff;
+  stroke-width: 0;
+  stroke-opacity: 0.5;
+  transition: stroke-width 0.3s ease-in;
+  fill: #f2f0f2;
+}
+
+#check-icon:hover {
+  stroke-width: 1px;
+}
