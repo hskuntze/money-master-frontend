@@ -45,6 +45,28 @@
   margin: 5px;
 }
 
+.manage-expenses-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manage-buttons {
+  display: flex;
+}
+
+.meh-right {
+  justify-content: end;
+}
+
+.meh-right button {
+  margin-right: 0;
+  margin-left: 15px;
+}
+
+.meh-left {
+  justify-content: start;
+}
+
 .manage-button {
   width: 250px;
   height: 45px;
