@@ -5,7 +5,7 @@ import Auth from "pages/Auth";
 import Home from "pages/Home";
 import { useState } from "react";
 import { ThemeContext, ThemeContextData } from "ThemeContext";
-import ExpenseTrackPage from "pages/ExpenseTrack";
+import ExpenseTrack from "pages/ExpenseTrack";
 
 const Routes = () => {
   const [themeContextData, setThemeContextData] = useState<ThemeContextData>({
@@ -24,7 +24,7 @@ const Routes = () => {
               path="/confirmregistration"
               element={<ConfirmRegistration />}
             />
-            <Route path="/expensetrack" element={<ExpenseTrackPage />} />
+            <Route path="/expensetrack/*" element={<ExpenseTrack />} />
           </Switch>
         </main>
       </ThemeContext.Provider>
