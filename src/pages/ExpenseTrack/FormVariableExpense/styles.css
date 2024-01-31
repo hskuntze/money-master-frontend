@@ -1,0 +1,131 @@
+.variable-expense-form-container {
+  width: calc(96% + 10px);
+  margin: 10px auto;
+}
+
+.new-variable-expense-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.new-variable-expense-button:hover {
+  background-color: #17794b;
+}
+
+.new-variable-expense-button i {
+  font-size: 20px;
+}
+
+.variable-expense-form-containter-header {
+  display: flex;
+  align-items: center;
+  height: auto;
+  min-height: 70px;
+}
+
+.variable-expense-select-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 45px;
+  min-height: 45px;
+  max-height: 60px;
+  width: 250px;
+  margin-right: 15px;
+}
+
+.variable-expense-select {
+  position: relative;
+  min-height: 45px;
+  background-image: linear-gradient(to left, #178552, #156d44);
+  color: #f2f0f2;
+  font-weight: 500;
+  border: 0;
+  border-radius: 10px;
+  font-size: 15px;
+  padding-left: 7px;
+}
+
+.variable-expense-save-button {
+  background-color: #02733e;
+  border-radius: 10px;
+  width: 80px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.variable-expense-save-button:hover {
+  background-color: #17794b;
+}
+
+.variable-expense-remove-button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 50px;
+  height: 20px;
+  margin-top: 5px;
+}
+
+.variable-expense-form-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.variable-expense-entry-container {
+  position: relative;
+  border: 1px solid #02733e;
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 245px;
+  min-height: 190px;
+  margin: 10px 25px 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+  background-image: linear-gradient(to left, #178552, #156d44);
+}
+
+.variable-expense-entry-container::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  background-image: linear-gradient(to left, #156d44, #178552);
+  border-radius: 10px;
+}
+
+.variable-expense-entry-container:hover::before {
+  opacity: 1;
+}
+
+.variable-expense-entry {
+  width: 300px;
+}
+
+.register-expense-input {
+  background-color: #f2f0f2;
+  border-radius: 10px;
+  border: 0;
+  margin: 2.5px 0;
+  padding-left: 7px;
+  width: 300px;
+  height: 40px;
+  font-size: 15px;
+}

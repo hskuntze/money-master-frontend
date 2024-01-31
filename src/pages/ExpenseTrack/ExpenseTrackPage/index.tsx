@@ -174,35 +174,6 @@ const ExpenseTrackPage = ({ editFixedExpenses, editVariableExpenses }: Props) =>
 
   return (
     <div>
-      {/* <div
-        className="manage-expenses-header"
-        style={{ width: "calc( 96% + 10px )", margin: "0 auto" }}
-      >
-        <div className="manage-buttons meh-left">
-          <button
-            className="manage-button"
-            onClick={() => {
-              setEditFixedExpenses(!editFixedExpenses);
-              setEditVariableExpenses(false);
-            }}
-          >
-            Edit Fixed Expenses
-          </button>
-          <button
-            className="manage-button"
-            onClick={() => {
-              setEditVariableExpenses(!editVariableExpenses);
-              setEditFixedExpenses(false);
-            }}
-          >
-            Edit Variable Expenses
-          </button>
-        </div>
-        <div className="manage-buttons meh-right">
-          <button className="manage-button">Add Fixed Expense</button>
-          <button className="manage-button">Add Variable Expense</button>
-        </div>
-      </div> */}
       {editFixedExpenses && !editVariableExpenses && (
         <section className="edit-expenses-section">
           editar fixed expenses
