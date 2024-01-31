@@ -84,7 +84,7 @@
 
 .edit-variable-expenses-section {
   width: calc(97% + 10px);
-  margin: 10px auto;
+  margin: 40px auto;
 }
 
 .edit-variable-expense-group-container {
@@ -93,7 +93,8 @@
 
 .edit-variable-expense-group-container h2 {
   margin-left: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 .edit-variable-expense-group {

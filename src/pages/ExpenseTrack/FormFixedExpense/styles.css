@@ -1,0 +1,88 @@
+.fixed-expense-form-container {
+  width: calc(96% + 10px);
+  margin: 10px auto;
+}
+
+.fixed-expense-form-container-header {
+  display: flex;
+  align-items: center;
+  height: auto;
+  min-height: 70px;
+}
+
+.fixed-expense-save-button {
+  background-color: #02733e;
+  border-radius: 10px;
+  width: 80px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.fixed-expense-save-button:hover {
+  background-color: #17794b;
+}
+
+.new-fixed-expense-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.new-fixed-expense-button:hover {
+  background-color: #17794b;
+}
+
+.new-fixed-expense-button i {
+  font-size: 20px;
+}
+
+.fixed-expense-form-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fixed-expense-entry-container {
+  position: relative;
+  border: 1px solid #02733e;
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 380px;
+  min-height: 235px;
+  margin: 10px 25px 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+  background-image: linear-gradient(to left, #178552, #156d44);
+}
+
+.fixed-expense-entry-container::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  background-image: linear-gradient(to left, #156d44, #178552);
+  border-radius: 10px;
+}
+
+.fixed-expense-entry-container:hover::before {
+  opacity: 1;
+}
+
+.fixed-expense-entry {
+  width: 300px;
+}
