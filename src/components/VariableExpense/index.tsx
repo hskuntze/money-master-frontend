@@ -26,7 +26,13 @@ type FormData = {
   dateOfCharge: string;
 };
 
-const VariableExpense = ({ id, title, price, dateOfCharge, onUpdate }: Props) => {
+const VariableExpense = ({
+  id,
+  title,
+  price,
+  dateOfCharge,
+  onUpdate,
+}: Props) => {
   const [edit, setEdit] = useState(false);
 
   const {
@@ -69,9 +75,11 @@ const VariableExpense = ({ id, title, price, dateOfCharge, onUpdate }: Props) =>
   };
 
   const handleDelete = () => {
-    let result = window.confirm("Are you sure you want to delete it? You'll lose this record!");
+    let result = window.confirm(
+      "Are you sure you want to delete it? You'll lose this record!"
+    );
 
-    if(result) {
+    if (result) {
       const params: AxiosRequestConfig = {
         url: `/totalExpenseByMonths/delete/variableExpense/${id}`,
         withCredentials: true,
@@ -85,7 +93,7 @@ const VariableExpense = ({ id, title, price, dateOfCharge, onUpdate }: Props) =>
         })
         .catch((err) => {
           toast.error("Unable to delete this record. Try again later.");
-        })
+        });
     }
   };
 
@@ -99,7 +107,11 @@ const VariableExpense = ({ id, title, price, dateOfCharge, onUpdate }: Props) =>
         >
           <i className="bi bi-pencil-square" />
         </button>
-        <button type="button" className="variable-expense-header-btt" onClick={handleDelete}>
+        <button
+          type="button"
+          className="variable-expense-header-btt"
+          onClick={handleDelete}
+        >
           <i className="bi bi-trash-fill" />
         </button>
       </div>

@@ -22,7 +22,7 @@ const PieChart = ({
   topRightBorder,
   bottomLeftBorder,
   bottomRightBorder,
-  margin
+  margin,
 }: Props) => {
   return (
     <div
@@ -33,7 +33,7 @@ const PieChart = ({
         borderBottomRightRadius: bottomRightBorder,
         borderTopLeftRadius: topLeftBorder,
         borderTopRightRadius: topRightBorder,
-        margin: margin
+        margin: margin,
       }}
     >
       <label className="pie-chart-label" htmlFor={`#pie-chart-${name}`}>

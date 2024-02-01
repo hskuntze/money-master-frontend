@@ -66,11 +66,13 @@ const Login = () => {
         user.expenseTrack = res.data as ExpenseTrack;
         saveUserData(user);
         setUserContextData({
-          user: user
-        })
+          user: user,
+        });
       })
       .catch((err) => {
-        toast.error("Something went wrong while trying to retrieve your information.");
+        toast.error(
+          "Something went wrong while trying to retrieve your information."
+        );
       });
   };
 

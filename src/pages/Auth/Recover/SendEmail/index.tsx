@@ -62,7 +62,7 @@ const SendEmail = () => {
             </div>
           </div>
           {loading ? (
-            <div style={{marginBottom: "150px"}}>
+            <div style={{ marginBottom: "150px" }}>
               <Loader />
             </div>
           ) : (

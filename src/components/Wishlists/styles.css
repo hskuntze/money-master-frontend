@@ -5,6 +5,10 @@
   padding: 15px;
 }
 
+.wishlist-outter-container .pagination-container {
+  margin: 15px auto 0 auto;
+}
+
 .wishlist-header {
   display: flex;
   height: 40px;

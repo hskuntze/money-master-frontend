@@ -7,7 +7,7 @@
   border-radius: 10px;
   margin: 10px auto;
   padding: 10px;
-  color: #F2F0F2;
+  color: #f2f0f2;
 }
 
 .expense-track-header {
@@ -100,4 +100,14 @@
 .edit-variable-expense-group {
   display: flex;
   flex-wrap: wrap;
+}
+
+.edit-expenses-section {
+  margin: 30px auto;
+}
+
+.edit-expenses-section.fixed-expenses-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

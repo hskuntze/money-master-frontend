@@ -18,7 +18,7 @@ const MyInfo = () => {
   const salaryLabel = "My salary: ";
   const salaryPerYearLabel = "Salary per year: ";
   const paymentDayLabel = "Payment day: ";
-  
+
   const [showInfo, setShowInfo] = useState(true);
   const [edit, setEdit] = useState(false);
   const { handleSubmit, control, setValue } = useForm<FormData>();
@@ -31,12 +31,12 @@ const MyInfo = () => {
 
   const handleEdit = () => {
     setEdit(!edit);
-    if(userContextData.user?.expenseTrack !== undefined) {
-      setValue("salary" ,userContextData.user.expenseTrack.monthlyIncome);
+    if (userContextData.user?.expenseTrack !== undefined) {
+      setValue("salary", userContextData.user.expenseTrack.monthlyIncome);
     } else {
       toast.error("User data is undefined. Try logging in again.");
     }
-  }
+  };
 
   const onSubmit = (formData: FormData) => {
     const params: AxiosRequestConfig = {
@@ -55,7 +55,7 @@ const MyInfo = () => {
         user.expenseTrack = res.data;
         saveUserData(user);
         setUserContextData({
-          user: user
+          user: user,
         });
         toast.success("Saved");
       })
@@ -69,9 +69,11 @@ const MyInfo = () => {
   };
 
   useEffect(() => {
-    const element = document.getElementById("my-info-element") as HTMLDivElement;
+    const element = document.getElementById(
+      "my-info-element"
+    ) as HTMLDivElement;
 
-    if(themeContextData.theme === "dark") {
+    if (themeContextData.theme === "dark") {
       element.style.backgroundColor = "#073520";
     } else {
       element.style.backgroundColor = "#148C54";
@@ -79,7 +81,10 @@ const MyInfo = () => {
   }, [themeContextData.theme]);
 
   return (
-    <div id="my-info-element" className="my-info-outter-container box-shadow side-element">
+    <div
+      id="my-info-element"
+      className="my-info-outter-container box-shadow side-element"
+    >
       <div className="my-info-header">
         <span className="my-info-title">My Info</span>
         <div className="my-info-button-display">

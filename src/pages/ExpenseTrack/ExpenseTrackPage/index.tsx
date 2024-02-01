@@ -17,9 +17,9 @@ import { SpringPage } from "types/springpage";
 import TotalExpenseByMonth from "components/TotalExpenseByMonth";
 import ColumnChart from "components/ColumnChart";
 import { ColumnChartConfig } from "types/charts/columnchartconfig";
-import FixedExpenses from "components/FixedExpenses";
 import VariableExpense from "components/VariableExpense";
 import { VariableExpense as VariableExpenseType } from "types/variableexpense";
+import FixedExpenses from "components/FixedExpenses";
 
 type GroupedExpenses = { [key: string]: VariableExpenseType[] };
 
@@ -28,7 +28,10 @@ interface Props {
   editVariableExpenses: boolean;
 }
 
-const ExpenseTrackPage = ({ editFixedExpenses, editVariableExpenses }: Props) => {
+const ExpenseTrackPage = ({
+  editFixedExpenses,
+  editVariableExpenses,
+}: Props) => {
   const [tebms, setTebms] = useState<SpringPage<TotalExpenseByMonthType>>();
   const [basicTebms, setBasicTebms] = useState<ColumnChartConfig[]>([]);
   const [sumByTitles, setSumByTitles] = useState<PieChartConfig[]>([]);
@@ -175,8 +178,8 @@ const ExpenseTrackPage = ({ editFixedExpenses, editVariableExpenses }: Props) =>
   return (
     <div>
       {editFixedExpenses && !editVariableExpenses && (
-        <section className="edit-expenses-section">
-          editar fixed expenses
+        <section className="edit-expenses-section fixed-expenses-section">
+          <FixedExpenses editable={true} width={"calc( 96% + 10px )"} />
         </section>
       )}
       {!editFixedExpenses && editVariableExpenses && (
@@ -215,7 +218,6 @@ const ExpenseTrackPage = ({ editFixedExpenses, editVariableExpenses }: Props) =>
       {!editFixedExpenses && !editVariableExpenses && (
         <>
           <div className="expense-track-header">
-            <FixedExpenses editable={true} width={"calc( 96% + 10px )"} />
             <div className="expense-track-header-charts">
               <ColumnChart
                 name="Expenses by date of charge"
