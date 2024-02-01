@@ -51,13 +51,13 @@ const Vault = () => {
       let sum: number = 0;
       const tebms = userContextData.user.expenseTrack.totalExpenseByMonths;
       tebms.sort((a, b) => a.id - b.id);
-      
+
       const lastTebm = tebms[tebms.length - 1];
-      
+
       lastTebm.variableExpenses.forEach((ve) => {
         sum += ve.price;
       });
-      
+
       return vault.allowedToSpend - sum;
     }
 

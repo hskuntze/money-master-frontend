@@ -171,7 +171,8 @@ const Register = () => {
                   {...register("idNumber", {
                     required: "Required",
                     pattern: {
-                      value: /([0-9]{2}[.]?[0-9]{3}[.]?[0-9]{3}[/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})/i,
+                      value:
+                        /([0-9]{2}[.]?[0-9]{3}[.]?[0-9]{3}[/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})/i,
                       message: "Only numbers",
                     },
                   })}
@@ -196,7 +197,7 @@ const Register = () => {
                     pattern: {
                       value: /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/,
                       message: "Only numbers",
-                    }
+                    },
                   })}
                 />
                 <div className="invalid-feedback d-block">

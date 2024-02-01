@@ -25,7 +25,7 @@ const NewPassword = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm<FormData>();
 
   const handleRevealPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -126,7 +126,8 @@ const NewPassword = () => {
                   value: 48,
                   message: "Maximum of 48 characters",
                 },
-                validate: (value: string) => watch("password") !== value || "Passwords are not matching"
+                validate: (value: string) =>
+                  watch("password") !== value || "Passwords are not matching",
               })}
             />
             <div className="invalid-feedback d-block">

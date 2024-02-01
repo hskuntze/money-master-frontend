@@ -18,6 +18,6 @@ export type User = {
   address: Address;
   vault: Vault;
   expenseTrack: ExpenseTrack;
-  roles: Role[]
+  roles: Role[];
   wishlists: Wishlist[];
 };

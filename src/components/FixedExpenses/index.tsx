@@ -6,9 +6,11 @@ import { requestBackend } from "util/requests";
 import { toast } from "react-toastify";
 import { SpringPage } from "types/springpage";
 import Pagination from "components/Pagination";
-import { formatNumberToMoney } from "util/formatters";
+import { formatDateToString, formatNumberToMoney } from "util/formatters";
 import { Controller, useForm } from "react-hook-form";
 import { CurrencyInput } from "react-currency-mask";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type HpfeContentData = {
   activePage: number;
@@ -28,6 +30,8 @@ const FixedExpenses = ({ width, editable }: Props) => {
     useState<SpringPage<FixedExpense>>();
   const [editStates, setEditStates] = useState<EditableItem>({});
   const [editItemId, setEditItemId] = useState<number | null>(null);
+  const [beginDate, setBeginDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [hpfeContentData, setHpfeContentData] = useState<HpfeContentData>({
     activePage: 0,
   });
@@ -66,6 +70,12 @@ const FixedExpenses = ({ width, editable }: Props) => {
   };
 
   const handleEditClick = (feId: number) => {
+    /*
+      Reseta o estado da data para que o componente DatePicker
+      resgate a data do elemento em si
+     */
+    setBeginDate(null);
+
     //Determina que o item é editável
     setEditStates((prev) => ({
       ...prev,
@@ -87,6 +97,27 @@ const FixedExpenses = ({ width, editable }: Props) => {
     }
   };
 
+  const handleDelete = (id: number) => {
+    let confirm = window.confirm("Are you sure you want to delete it?");
+
+    if (confirm) {
+      const params: AxiosRequestConfig = {
+        url: `/totalExpenseByMonths/delete/fixedExpense/${id}`,
+        withCredentials: true,
+        method: "DELETE",
+      };
+
+      requestBackend(params)
+        .then((res) => {
+          loadInfo();
+          toast.success("Deleted");
+        })
+        .catch(() => {
+          toast.error("Unable to delete");
+        });
+    }
+  };
+
   const onSubmit = (fe: FixedExpense) => {
     const params: AxiosRequestConfig = {
       url: `/totalExpenseByMonths/update/fixedExpense/${fe.id}`,
@@ -105,6 +136,11 @@ const FixedExpenses = ({ width, editable }: Props) => {
       .then((res) => {
         loadInfo();
         toast.success("Saved!");
+
+        setEditStates((prev) => ({
+          ...prev,
+          [fe.id]: !prev[fe.id],
+        }));
       })
       .catch((err) => {
         console.log(err);
@@ -113,7 +149,7 @@ const FixedExpenses = ({ width, editable }: Props) => {
 
   return (
     <div
-      className="hpfe-outter-container"
+      className={`hpfe-outter-container ${editable ? "editable" : ""}`}
       style={
         typeof width === "number" ? { width: width + "%" } : { width: width }
       }
@@ -123,21 +159,36 @@ const FixedExpenses = ({ width, editable }: Props) => {
       </div>
       <div className="hpfe-inner-container">
         {fixedExpenses?.content.map((fe) => (
-          <div key={fe.id + fe.title} style={{width: "calc(100% / 6)"}}>
+          <div key={fe.id + fe.title} style={{ width: "calc(100% / 6)" }}>
             {editable ? (
-              <div
-                className="hpfe-item"
-                onClick={() => handleEditClick(fe.id)}
-              >
+              <div className="hpfe-item editable">
+                <div className="hpfe-edit-buttons">
+                  <button
+                    className="fixed-expense-manage-button"
+                    type="button"
+                    onClick={() => handleEditClick(fe.id)}
+                  >
+                    <i className="bi bi-pencil-square" />
+                  </button>
+                  <button
+                    className="fixed-expense-manage-button"
+                    type="button"
+                    onClick={() => handleDelete(fe.id)}
+                  >
+                    <i className="bi bi-trash-fill" />
+                  </button>
+                </div>
                 {editStates[fe.id] && editItemId === fe.id ? (
-                  <form onSubmit={handleSubmit(onSubmit)} className="hpfe-edit-container">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="hpfe-edit-container"
+                  >
                     <input
                       type="text"
                       id="fixed-expense-title"
                       placeholder="Title"
                       className="fixed-expense-edit-input"
                       {...register("title", {})}
-                      onClick={(e) => e.stopPropagation()}
                     />
                     <Controller
                       name="price"
@@ -155,29 +206,79 @@ const FixedExpenses = ({ width, editable }: Props) => {
                               id="fixed-expense-price"
                               placeholder="Price"
                               className="fixed-expense-edit-input"
-                              onClick={(e) => e.stopPropagation()}
                             />
                           }
                         />
                       )}
                     />
                     <input
-                      type="text"
+                      type="number"
                       id="fixed-expense-day-of-charge"
                       placeholder="Day of charge"
                       className="fixed-expense-edit-input"
-                      {...register("dayOfCharge", {})}
-                      onClick={(e) => e.stopPropagation()}
+                      max={31}
+                      min={1}
+                      {...register("dayOfCharge", {
+                        max: 31,
+                        min: 1,
+                      })}
                     />
-                    <button type="submit" onClick={(e) => e.stopPropagation()}>
-                      Save
-                    </button>
+                    <div style={{ width: "90%" }}>
+                      <Controller
+                        name="beginOfExpense"
+                        control={control}
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              beginDate !== null
+                                ? beginDate
+                                : new Date(fe.beginOfExpense + "T03:00:00Z")
+                            }
+                            onChange={(date) => setBeginDate(date)}
+                            onSelect={(date) =>
+                              setValue(
+                                "beginOfExpense",
+                                formatDateToString(date)
+                              )
+                            }
+                            dateFormat={"dd/MM/yyyy"}
+                            className="fixed-expense-edit-input date-picker begin"
+                            placeholderText="Begin of expense charge date"
+                          />
+                        )}
+                      />
+                    </div>
+                    <div style={{ width: "90%" }}>
+                      <Controller
+                        name="endOfExpense"
+                        control={control}
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              endDate !== null
+                                ? endDate
+                                : new Date(fe.endOfExpense + "T03:00:00Z")
+                            }
+                            onChange={(date) => setEndDate(date)}
+                            onSelect={(date) =>
+                              setValue("endOfExpense", formatDateToString(date))
+                            }
+                            dateFormat={"dd/MM/yyyy"}
+                            className="fixed-expense-edit-input date-picker end"
+                            placeholderText="End of expense charge date"
+                          />
+                        )}
+                      />
+                    </div>
+                    <button type="submit">Save</button>
                   </form>
                 ) : (
                   <>
                     <span>{fe.title}</span>
                     <span>{formatNumberToMoney(fe.price)}</span>
                     <span>Day of Charge: {fe.dayOfCharge}</span>
+                    <span>Begin at: {fe.beginOfExpense}</span>
+                    <span>End at: {fe.endOfExpense}</span>
                   </>
                 )}
               </div>
@@ -186,6 +287,8 @@ const FixedExpenses = ({ width, editable }: Props) => {
                 <span>{fe.title}</span>
                 <span>{formatNumberToMoney(fe.price)}</span>
                 <span>Day of Charge: {fe.dayOfCharge}</span>
+                <span>Begin at: {fe.beginOfExpense}</span>
+                <span>End at: {fe.endOfExpense}</span>
               </div>
             )}
           </div>

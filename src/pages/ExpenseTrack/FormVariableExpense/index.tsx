@@ -2,7 +2,7 @@ import "./styles.css";
 import { CurrencyInput } from "react-currency-mask";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useState } from "react";
-import { formatDate } from "util/formatters";
+import { formatDateToString } from "util/formatters";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AxiosRequestConfig } from "axios";
@@ -236,7 +236,7 @@ const FormVariableExpense = () => {
                       onSelect={(date) =>
                         setValue(
                           `expenses.${index}.dateOfCharge`,
-                          formatDate(date)
+                          formatDateToString(date)
                         )
                       }
                       dateFormat={"dd/MM/yyyy"}

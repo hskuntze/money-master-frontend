@@ -3,7 +3,7 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { CurrencyInput } from "react-currency-mask";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { formatDate } from "util/formatters";
+import { formatDateToString } from "util/formatters";
 import { useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
@@ -137,14 +137,14 @@ const FormFixedExpense = () => {
                               : ""
                           }`}
                           {...register(`expenses.${index}.price`, {
-                            required: "Required"
+                            required: "Required",
                           })}
                         />
                       }
                     />
                   )}
                 />
-                
+
                 <div className="invalid-feedback d-block">
                   {errors.expenses && errors.expenses[index]?.price?.message}
                 </div>
@@ -186,7 +186,7 @@ const FormFixedExpense = () => {
                       onSelect={(date) =>
                         setValue(
                           `expenses.${index}.beginOfExpense`,
-                          formatDate(date)
+                          formatDateToString(date)
                         )
                       }
                       dateFormat={"dd/MM/yyyy"}
@@ -213,7 +213,7 @@ const FormFixedExpense = () => {
                       onSelect={(date) =>
                         setValue(
                           `expenses.${index}.endOfExpense`,
-                          formatDate(date)
+                          formatDateToString(date)
                         )
                       }
                       dateFormat={"dd/MM/yyyy"}

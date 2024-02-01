@@ -29,7 +29,7 @@ const Navbar = () => {
 
     const root = document.getElementById("root") as HTMLDivElement;
 
-    if(themeContextData.theme === "light") {
+    if (themeContextData.theme === "light") {
       root.style.backgroundColor = "#434343";
     } else {
       root.style.backgroundColor = "#F2F0F2";

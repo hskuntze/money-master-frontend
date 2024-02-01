@@ -9,9 +9,15 @@ type Props = {
   width: number;
 };
 
-const Pagination = ({ pageCount, forcePage, range, onChange, width }: Props) => {
+const Pagination = ({
+  pageCount,
+  forcePage,
+  range,
+  onChange,
+  width,
+}: Props) => {
   return (
-    <div className="pagination-container" style={{width: width}}>
+    <div className="pagination-container" style={{ width: width }}>
       <ReactPaginate
         pageCount={pageCount}
         pageRangeDisplayed={range}

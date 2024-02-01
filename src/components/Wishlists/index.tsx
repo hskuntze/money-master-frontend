@@ -59,8 +59,8 @@ const Wishlists = () => {
 
   const handleClearFilter = () => {
     setValue("title", "");
-    onSubmit({activePage:0, title: ""});
-  }
+    onSubmit({ activePage: 0, title: "" });
+  };
 
   const onSubmit = (filter: ComponentData) => {
     const params: AxiosRequestConfig = {
@@ -90,11 +90,7 @@ const Wishlists = () => {
         <div className="wishlist-component-filter">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="wishlist-componenet-filter-input">
-              <input
-                type="text"
-                placeholder="Filter"
-                {...register("title")}
-              />
+              <input type="text" placeholder="Filter" {...register("title")} />
               <button
                 type="button"
                 className="wishlist-componenet-filter-input-clear"
