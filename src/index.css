@@ -104,6 +104,23 @@
   margin-top: 0 !important;
 }
 
+.nothing-to-show {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.4rem;
+  text-align: center;
+}
+
+.general-outter-container {
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  background-image: linear-gradient(to left, #178552, #156d44);
+}
+
 @media (min-width: 576px) {
   .auth-input {
     height: 60px;

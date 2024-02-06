@@ -1,15 +1,30 @@
 import { Link, Route, Routes } from "react-router-dom";
 import ExpenseTrackPage from "./ExpenseTrackPage";
 import FormVariableExpense from "./FormVariableExpense";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FormFixedExpense from "./FormFixedExpense";
+import { ThemeContext } from "ThemeContext";
 
 const ExpenseTrack = () => {
   const [editFixedExpenses, setEditFixedExpenses] = useState(false);
   const [editVariableExpenses, setEditVariableExpenses] = useState(false);
 
+  const { themeContextData } = useContext(ThemeContext);
+
+  useEffect(() => {
+    const element = document.getElementById(
+      "expense-track"
+    ) as HTMLDivElement;
+
+    if (themeContextData.theme === "dark") {
+      element.style.backgroundColor = "#073520";
+    } else {
+      element.style.backgroundColor = "#148C54";
+    }
+  }, [themeContextData.theme]);
+
   return (
-    <div className="expense-track-page-outter-container">
+    <section id="expense-track" className="expense-track-page-outter-container">
       <div
         className="manage-expenses-header"
         style={{ width: "calc( 96% + 10px )", margin: "0 auto" }}
@@ -60,7 +75,7 @@ const ExpenseTrack = () => {
         <Route path="add/variableExpense" element={<FormVariableExpense />} />
         <Route path="/add/fixedExpense" element={<FormFixedExpense />} />
       </Routes>
-    </div>
+    </section>
   );
 };
 

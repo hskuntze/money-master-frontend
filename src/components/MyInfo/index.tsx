@@ -21,7 +21,9 @@ const MyInfo = () => {
 
   const [showInfo, setShowInfo] = useState(true);
   const [edit, setEdit] = useState(false);
+  
   const { handleSubmit, control, setValue } = useForm<FormData>();
+
   const { userContextData, setUserContextData } = useContext(UserContext);
   const { themeContextData } = useContext(ThemeContext);
 

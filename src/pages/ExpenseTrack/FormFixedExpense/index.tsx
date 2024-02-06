@@ -77,7 +77,7 @@ const FormFixedExpense = () => {
           toast.error("Unable to save these records.");
         });
     } else {
-      toast.warning("First you need to create at least 1 new variable expense");
+      toast.warning("First you need to create at least 1 new fixed expense");
     }
   };
 

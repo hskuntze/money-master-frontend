@@ -1,6 +1,10 @@
 .column-chart-card-container {
   background-color: #02733e;
   padding: 5px;
-  border-radius: 10px;
   margin: 5px;
+  border-radius: 2px;
+}
+
+.column-chart-label {
+  margin: 7px 17px;
 }

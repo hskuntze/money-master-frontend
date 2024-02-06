@@ -4,7 +4,6 @@
   max-width: 95vw;
   width: 88vw;
   height: auto;
-  border-radius: 10px;
   margin: 10px auto;
   padding: 10px;
   color: #f2f0f2;
@@ -74,7 +73,7 @@
   margin-right: 15px;
   padding: 5px;
   font-size: 0.9em;
-  border-radius: 10px;
+  border-radius: 2px;
   transition: background-color 0.5s ease-in-out;
 }
 
@@ -110,4 +109,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.ve-nts-outter-container {
+  height: 455px;
+  width: calc(96% + 10px);
+  margin: 0 auto;
 }

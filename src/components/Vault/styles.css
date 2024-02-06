@@ -1,6 +1,5 @@
 .vault-outter-container {
   height: auto;
-  border-radius: 10px;
   padding: 15px;
   background-color: #148c54;
   color: #f2f0f2;
@@ -24,7 +23,7 @@
   padding-left: 12px;
   padding-top: 10px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 4px;
   outline: none;
   font-size: 14px;
 }
@@ -91,7 +90,7 @@
 .vault-button {
   width: 80px;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 4px;
   color: #f2f0f2;
   font-size: 15px;
 }

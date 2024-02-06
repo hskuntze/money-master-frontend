@@ -1,10 +1,5 @@
 .hpfe-outter-container {
-  background-color: #56a681;
-  border-radius: 10px;
   height: 250px;
-  padding: 7px;
-  display: flex;
-  flex-direction: column;
 }
 
 .hpfe-outter-container.editable {
