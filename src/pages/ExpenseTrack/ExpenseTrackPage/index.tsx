@@ -115,9 +115,7 @@ const ExpenseTrackPage = ({
         setTebms(res.data);
 
         let groups: GroupedExpenses[] = [];
-
         let tebms: SpringPage<TotalExpenseByMonthType> = res.data;
-
         tebms?.content.forEach((tebm) => {
           groups.push(
             groupVariableExpensesByMonthAndYear(tebm.variableExpenses)
@@ -184,35 +182,44 @@ const ExpenseTrackPage = ({
       )}
       {!editFixedExpenses && editVariableExpenses && (
         <section className="edit-expenses-section">
-          <div className="edit-variable-expenses-section">
-            {
-              /**
-               * Transforma o objeto "groupedVariableExpenses" em um array com chave-valor e faz o mapping desses valores.
-               * Cada chave carrega como valor um array de objetos "VariableExpense".
-               */
-              Object.entries(groupedVariableExpenses).map(([key, expense]) => (
-                <div
-                  className="edit-variable-expense-group-container"
-                  key={key}
-                >
-                  <h2>
-                    {getMonthNameFromDate(key)} - {key.slice(0, 4)}
-                  </h2>
-                  <div className="edit-variable-expense-group">
-                    {expense.map((ve) => (
-                      <VariableExpense
-                        dateOfCharge={ve.dateOfCharge}
-                        id={ve.id}
-                        price={ve.price}
-                        title={ve.title}
-                        onUpdate={handleVariableExpenseUpdate}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))
-            }
-          </div>
+          {Object.entries(groupedVariableExpenses).length !== 0 ? (
+            <div className="edit-variable-expenses-section">
+              {
+                /**
+                 * Transforma o objeto "groupedVariableExpenses" em um array com chave-valor e faz o mapping desses valores.
+                 * Cada chave carrega como valor um array de objetos "VariableExpense".
+                 */
+                Object.entries(groupedVariableExpenses).map(
+                  ([key, expense]) => (
+                    <div
+                      className="edit-variable-expense-group-container"
+                      key={key}
+                    >
+                      <h2>
+                        {getMonthNameFromDate(key)} - {key.slice(0, 4)}
+                      </h2>
+                      <div className="edit-variable-expense-group">
+                        {expense.map((ve) => (
+                          <VariableExpense
+                            key={ve.id}
+                            dateOfCharge={ve.dateOfCharge}
+                            id={ve.id}
+                            price={ve.price}
+                            title={ve.title}
+                            onUpdate={handleVariableExpenseUpdate}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )
+                )
+              }
+            </div>
+          ) : (
+            <div className="nothing-to-show ve-nts-outter-container general-outter-container">
+              Nothing to show here. Add some variable expenses.
+            </div>
+          )}
         </section>
       )}
       {!editFixedExpenses && !editVariableExpenses && (
@@ -244,6 +251,8 @@ const ExpenseTrackPage = ({
                   margin="0 0"
                   bottomRightBorder={0}
                   topRightBorder={0}
+                  bottomLeftBorder={4}
+                  topLeftBorder={4}
                 />
                 {tebms?.content
                   .filter(

@@ -2,9 +2,9 @@ import "./styles.css";
 import { AxiosRequestConfig } from "axios";
 import MyInfo from "components/MyInfo";
 import Vault from "components/Vault";
-import Wishlists from "components/Wishlists";
+import WishlistsList from "components/WishlistsList";
 import { requestBackend } from "util/requests";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { TotalExpenseByMonth as TotalExpenseByMonthType } from "types/totalexpensebymonth";
 import { SpringPage } from "types/springpage";
 import { toast } from "react-toastify";
@@ -14,6 +14,7 @@ import Pagination from "components/Pagination";
 import FixedExpenses from "components/FixedExpenses";
 import { useNavigate } from "react-router-dom";
 import { getTokenData } from "util/auth";
+import { ThemeContext } from "ThemeContext";
 
 type TebmComponentData = {
   activePage: number;
@@ -27,6 +28,8 @@ const Home = () => {
       activePage: 0,
     }
   );
+
+  const { themeContextData } = useContext(ThemeContext);
 
   /**
    * Responsible for loading the TotalExpenseByMonth's
@@ -54,6 +57,23 @@ const Home = () => {
       });
   }, [tebmComponentData]);
 
+  const handleTebmCreation = () => {
+    const params: AxiosRequestConfig = {
+      url: "/expenseTracks/register/totalExpenseForThisMonth",
+      method: "POST",
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then(() => {
+        toast.success("Success!");
+      })
+      .catch((err) => {
+        toast.error("Unable to create a new TEBM");
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     if (getTokenData() === undefined) {
       navigate("/auth");
@@ -61,6 +81,16 @@ const Home = () => {
 
     loadTebms();
   }, [loadTebms, navigate]);
+
+  useEffect(() => {
+    const element = document.getElementById("main-content") as HTMLDivElement;
+
+    if (themeContextData.theme === "dark") {
+      element.style.backgroundColor = "#073520";
+    } else {
+      element.style.backgroundColor = "#148C54";
+    }
+  }, [themeContextData.theme]);
 
   const handlePageChange = (pageNumber: number) => {
     setTebmComponentData({
@@ -71,41 +101,58 @@ const Home = () => {
   return (
     <>
       <section id="main-section" className="main-section">
-        <div className="main-content">
+        <div id="main-content" className="main-content">
           <div className="hpfe-container">
             <div className="hpfe-content">
               <FixedExpenses editable={false} />
             </div>
           </div>
-          <div className="tebm-container">
-            <div className="tebm-content">
-              {tebms?.content.map((tebm) => (
-                <TotalExpenseByMonth
-                  key={tebm.id}
-                  id={tebm.id}
-                  date={tebm.date}
-                  remainingAmount={tebm.remainingAmount}
-                  title={getMonthNameFromDate(tebm.date)}
-                  variableExpenses={tebm.variableExpenses.reverse()}
-                  width={30}
-                  holdExpansion={true}
-                />
-              ))}
-            </div>
-            <Pagination
-              pageCount={tebms ? tebms.totalPages : 0}
-              forcePage={tebms?.number}
-              range={2}
-              onChange={handlePageChange}
-              width={300}
-            />
+          <div className="create-new-total-expense-by-month">
+            <button
+              className="new-total-expense-by-month-button"
+              onClick={() => handleTebmCreation()}
+              type="button"
+            >
+              New Total Expense By Month
+            </button>
           </div>
+          {tebms?.empty ? (
+            <div className="tebm-nothing-to-show">
+              Nothing to show here yet.
+            </div>
+          ) : (
+            <div className="tebm-container">
+              <div className="tebm-content">
+                {tebms?.content.map((tebm) => (
+                  <TotalExpenseByMonth
+                    key={tebm.id}
+                    id={tebm.id}
+                    date={tebm.date}
+                    remainingAmount={tebm.remainingAmount}
+                    title={getMonthNameFromDate(tebm.date)}
+                    variableExpenses={tebm.variableExpenses.reverse()}
+                    width={30}
+                    holdExpansion={true}
+                  />
+                ))}
+              </div>
+              {tebms?.numberOfElements && tebms.numberOfElements > 3 && (
+                <Pagination
+                  pageCount={tebms ? tebms.totalPages : 0}
+                  forcePage={tebms?.number}
+                  range={2}
+                  onChange={handlePageChange}
+                  width={300}
+                />
+              )}
+            </div>
+          )}
         </div>
       </section>
       <aside id="side-section" className="side-section">
         <MyInfo />
         <Vault />
-        <Wishlists />
+        <WishlistsList sideElement={true} />
       </aside>
     </>
   );

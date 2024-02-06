@@ -1,0 +1,170 @@
+.wishlist-entry-container {
+  display: flex;
+}
+
+.side-entry {
+  width: 270px;
+  height: 50px;
+  margin-bottom: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wishlist-entry {
+  background-color: #dfdedf;
+  width: 240px;
+  color: #313131;
+  height: inherit;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  font-size: 15px;
+}
+
+.wishlist-entry-title {
+  width: 200px;
+  user-select: none;
+}
+
+.wishlist-entry-edit-button {
+  width: 40px;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wishlist-entry-edit-button i {
+  color: #f2f0f2;
+  font-size: 20px;
+}
+
+/*
+* ----- WHOLE ENTRY -----
+*/
+
+.whole-entry {
+  width: 32%;
+  height: 600px;
+}
+
+.wishlist-whole-entry {
+  background-image: linear-gradient(to left, #178552, #156d44);
+  border-radius: 4px;
+  width: 100%;
+  height: inherit;
+  color: #f2f0f2;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wishlisy-whole-entry-header {
+  display: flex;
+  width: 100%;
+}
+
+.wweh-title {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 80%;
+  height: 25px;
+  text-decoration: underline;
+  font-size: 19px;
+  font-weight: 500;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.wweh-edit {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 20%;
+  height: 25px;
+  padding-right: 5px;
+  padding-top: 5px;
+  font-weight: 300;
+  text-decoration: underline transparent;
+  transition: text-decoration 0.3s ease-in;
+}
+
+.wweh-edit:hover {
+  text-decoration: underline;
+}
+
+.wishlist-whole-entry-item {
+  min-height: 80px;
+  max-height: 120px;
+  margin: 10px 0;
+  transition: box-shadow 0.3s ease-in;
+  border: 1px solid #36363633;
+  border-radius: 4px;
+}
+
+.wishlist-whole-entry-item:hover {
+  box-shadow: 0px 0px 6px 4px #36363633;
+}
+
+.wwei-title {
+  height: 25px;
+  font-size: 17px;
+  font-weight: 500;
+  overflow: hidden;
+  position: relative;
+}
+
+.wwei-title span {
+  margin: 3px;
+  white-space: nowrap;
+  position: absolute;
+  animation: letreiro 11s linear infinite;
+}
+
+.wwei-title:hover span {
+  animation: unset;
+}
+
+@keyframes letreiro {
+  0% {
+    right: -120%;
+  }
+  100% {
+    right: 120%;
+  }
+}
+
+.wwei-title::-webkit-scrollbar {
+  display: none;
+}
+
+.wwei-price-and-link {
+  margin: 3px;
+  display: flex;
+}
+
+.wwei-price {
+  height: 20px;
+  font-size: 15px;
+}
+
+.wwei-link {
+  margin-left: 5px;
+  height: 20px;
+  font-size: 15px;
+  text-decoration: underline transparent;
+  transition: text-decoration 0.3s ease-in;
+}
+
+.wwei-link:hover {
+  text-decoration: underline;
+}
+
+.wwei-source-name {
+  margin: 3px;
+  font-size: 13px;
+  color: #d4cdcdcc;
+  font-style: italic;
+}

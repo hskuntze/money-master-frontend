@@ -8,6 +8,7 @@ import VaultType from "types/vault";
 import { CurrencyInput } from "react-currency-mask";
 import { UserContext } from "UserContext";
 import { getUserData, saveUserData } from "util/storage";
+import { ThemeContext } from "ThemeContext";
 
 type FormData = {
   savings: number;
@@ -19,6 +20,8 @@ const Vault = () => {
   const [edit, setEdit] = useState(false);
   const [showVault, setShowVault] = useState(true);
   const [vault, setVault] = useState<VaultType>();
+
+  const { themeContextData } = useContext(ThemeContext);
   const { userContextData, setUserContextData } = useContext(UserContext);
 
   const { handleSubmit, setValue, control } = useForm<FormData>();
@@ -54,9 +57,11 @@ const Vault = () => {
 
       const lastTebm = tebms[tebms.length - 1];
 
-      lastTebm.variableExpenses.forEach((ve) => {
-        sum += ve.price;
-      });
+      if(lastTebm !== undefined) {
+        lastTebm.variableExpenses.forEach((ve) => {
+          sum += ve.price;
+        });
+      }
 
       return vault.allowedToSpend - sum;
     }
@@ -106,8 +111,20 @@ const Vault = () => {
     }
   }, [setValue, userContextData]);
 
+  useEffect(() => {
+    const element = document.getElementById(
+      "vault"
+    ) as HTMLDivElement;
+
+    if (themeContextData.theme === "dark") {
+      element.style.backgroundColor = "#073520";
+    } else {
+      element.style.backgroundColor = "#148C54";
+    }
+  }, [themeContextData.theme]);
+
   return (
-    <div className="vault-outter-container box-shadow side-element">
+    <div id="vault" className="vault-outter-container box-shadow side-element">
       <div className="vault-header">
         <span className="vault-title">Vault</span>
         <div className="vault-button-display">

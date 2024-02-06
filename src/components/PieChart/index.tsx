@@ -29,8 +29,8 @@ const PieChart = ({
       className="pie-chart-card-container"
       style={{
         width: width + "%",
-        borderBottomLeftRadius: bottomLeftBorder,
-        borderBottomRightRadius: bottomRightBorder,
+        borderBottomLeftRadius: bottomLeftBorder + "px",
+        borderBottomRightRadius: bottomRightBorder + "px",
         borderTopLeftRadius: topLeftBorder,
         borderTopRightRadius: topRightBorder,
         margin: margin,

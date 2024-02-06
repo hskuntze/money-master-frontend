@@ -149,160 +149,167 @@ const FixedExpenses = ({ width, editable }: Props) => {
 
   return (
     <div
-      className={`hpfe-outter-container ${editable ? "editable" : ""}`}
+      className={`hpfe-outter-container general-outter-container ${editable ? "editable" : ""}`}
       style={
         typeof width === "number" ? { width: width + "%" } : { width: width }
       }
     >
-      <div className="hpfe-header">
-        <span key={"something"}>Your fixed expenses this month</span>
-      </div>
-      <div className="hpfe-inner-container">
-        {fixedExpenses?.content.map((fe) => (
-          <div key={fe.id + fe.title} style={{ width: "calc(100% / 6)" }}>
-            {editable ? (
-              <div className="hpfe-item editable">
-                <div className="hpfe-edit-buttons">
-                  <button
-                    className="fixed-expense-manage-button"
-                    type="button"
-                    onClick={() => handleEditClick(fe.id)}
-                  >
-                    <i className="bi bi-pencil-square" />
-                  </button>
-                  <button
-                    className="fixed-expense-manage-button"
-                    type="button"
-                    onClick={() => handleDelete(fe.id)}
-                  >
-                    <i className="bi bi-trash-fill" />
-                  </button>
-                </div>
-                {editStates[fe.id] && editItemId === fe.id ? (
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="hpfe-edit-container"
-                  >
-                    <input
-                      type="text"
-                      id="fixed-expense-title"
-                      placeholder="Title"
-                      className="fixed-expense-edit-input"
-                      {...register("title", {})}
-                    />
-                    <Controller
-                      name="price"
-                      control={control}
-                      key={fe.id}
-                      render={({ field }) => (
-                        <CurrencyInput
-                          value={fe.price}
-                          onChangeValue={(_, value) => {
-                            field.onChange(value);
-                          }}
-                          InputElement={
-                            <input
-                              type="text"
-                              id="fixed-expense-price"
-                              placeholder="Price"
-                              className="fixed-expense-edit-input"
-                            />
-                          }
+      {fixedExpenses?.empty ? (
+        <div className="nothing-to-show">Nothing to show here. Add some fixed expenses.</div>
+      ) : (
+        <>
+          <div className="hpfe-header">
+            <span key={"something"}>Your fixed expenses this month</span>
+          </div>
+          <div className="hpfe-inner-container">
+            {fixedExpenses?.content.map((fe) => (
+              <div key={fe.id + fe.title} style={{ width: "calc(100% / 6)" }}>
+                {editable ? (
+                  <div className="hpfe-item editable">
+                    <div className="hpfe-edit-buttons">
+                      <button
+                        className="fixed-expense-manage-button"
+                        type="button"
+                        onClick={() => handleEditClick(fe.id)}
+                      >
+                        <i className="bi bi-pencil-square" />
+                      </button>
+                      <button
+                        className="fixed-expense-manage-button"
+                        type="button"
+                        onClick={() => handleDelete(fe.id)}
+                      >
+                        <i className="bi bi-trash-fill" />
+                      </button>
+                    </div>
+                    {editStates[fe.id] && editItemId === fe.id ? (
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="hpfe-edit-container"
+                      >
+                        <input
+                          type="text"
+                          id="fixed-expense-title"
+                          placeholder="Title"
+                          className="fixed-expense-edit-input"
+                          {...register("title", {})}
                         />
-                      )}
-                    />
-                    <input
-                      type="number"
-                      id="fixed-expense-day-of-charge"
-                      placeholder="Day of charge"
-                      className="fixed-expense-edit-input"
-                      max={31}
-                      min={1}
-                      {...register("dayOfCharge", {
-                        max: 31,
-                        min: 1,
-                      })}
-                    />
-                    <div style={{ width: "90%" }}>
-                      <Controller
-                        name="beginOfExpense"
-                        control={control}
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              beginDate !== null
-                                ? beginDate
-                                : new Date(fe.beginOfExpense + "T03:00:00Z")
-                            }
-                            onChange={(date) => setBeginDate(date)}
-                            onSelect={(date) =>
-                              setValue(
-                                "beginOfExpense",
-                                formatDateToString(date)
-                              )
-                            }
-                            dateFormat={"dd/MM/yyyy"}
-                            className="fixed-expense-edit-input date-picker begin"
-                            placeholderText="Begin of expense charge date"
+                        <Controller
+                          name="price"
+                          control={control}
+                          key={fe.id}
+                          render={({ field }) => (
+                            <CurrencyInput
+                              value={fe.price}
+                              onChangeValue={(_, value) => {
+                                field.onChange(value);
+                              }}
+                              InputElement={
+                                <input
+                                  type="text"
+                                  id="fixed-expense-price"
+                                  placeholder="Price"
+                                  className="fixed-expense-edit-input"
+                                />
+                              }
+                            />
+                          )}
+                        />
+                        <input
+                          type="number"
+                          id="fixed-expense-day-of-charge"
+                          placeholder="Day of charge"
+                          className="fixed-expense-edit-input"
+                          max={31}
+                          min={1}
+                          {...register("dayOfCharge", {
+                            max: 31,
+                            min: 1,
+                          })}
+                        />
+                        <div style={{ width: "90%" }}>
+                          <Controller
+                            name="beginOfExpense"
+                            control={control}
+                            render={({ field }) => (
+                              <DatePicker
+                                selected={
+                                  beginDate !== null
+                                    ? beginDate
+                                    : new Date(fe.beginOfExpense + "T03:00:00Z")
+                                }
+                                onChange={(date) => setBeginDate(date)}
+                                onSelect={(date) =>
+                                  setValue(
+                                    "beginOfExpense",
+                                    formatDateToString(date)
+                                  )
+                                }
+                                dateFormat={"dd/MM/yyyy"}
+                                className="fixed-expense-edit-input date-picker begin"
+                                placeholderText="Begin of expense charge date"
+                              />
+                            )}
                           />
-                        )}
-                      />
-                    </div>
-                    <div style={{ width: "90%" }}>
-                      <Controller
-                        name="endOfExpense"
-                        control={control}
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              endDate !== null
-                                ? endDate
-                                : new Date(fe.endOfExpense + "T03:00:00Z")
-                            }
-                            onChange={(date) => setEndDate(date)}
-                            onSelect={(date) =>
-                              setValue("endOfExpense", formatDateToString(date))
-                            }
-                            dateFormat={"dd/MM/yyyy"}
-                            className="fixed-expense-edit-input date-picker end"
-                            placeholderText="End of expense charge date"
+                        </div>
+                        <div style={{ width: "90%" }}>
+                          <Controller
+                            name="endOfExpense"
+                            control={control}
+                            render={({ field }) => (
+                              <DatePicker
+                                selected={
+                                  endDate !== null
+                                    ? endDate
+                                    : new Date(fe.endOfExpense + "T03:00:00Z")
+                                }
+                                onChange={(date) => setEndDate(date)}
+                                onSelect={(date) =>
+                                  setValue(
+                                    "endOfExpense",
+                                    formatDateToString(date)
+                                  )
+                                }
+                                dateFormat={"dd/MM/yyyy"}
+                                className="fixed-expense-edit-input date-picker end"
+                                placeholderText="End of expense charge date"
+                              />
+                            )}
                           />
-                        )}
-                      />
-                    </div>
-                    <button type="submit">Save</button>
-                  </form>
+                        </div>
+                        <button type="submit">Save</button>
+                      </form>
+                    ) : (
+                      <>
+                        <span>{fe.title}</span>
+                        <span>{formatNumberToMoney(fe.price)}</span>
+                        <span>Day of Charge: {fe.dayOfCharge}</span>
+                        <span>Begin at: {fe.beginOfExpense}</span>
+                        <span>End at: {fe.endOfExpense}</span>
+                      </>
+                    )}
+                  </div>
                 ) : (
-                  <>
+                  <div className="hpfe-item" key={fe.id}>
                     <span>{fe.title}</span>
                     <span>{formatNumberToMoney(fe.price)}</span>
                     <span>Day of Charge: {fe.dayOfCharge}</span>
-                    <span>Begin at: {fe.beginOfExpense}</span>
-                    <span>End at: {fe.endOfExpense}</span>
-                  </>
+                  </div>
                 )}
               </div>
-            ) : (
-              <div className="hpfe-item" key={fe.id}>
-                <span>{fe.title}</span>
-                <span>{formatNumberToMoney(fe.price)}</span>
-                <span>Day of Charge: {fe.dayOfCharge}</span>
-                <span>Begin at: {fe.beginOfExpense}</span>
-                <span>End at: {fe.endOfExpense}</span>
-              </div>
-            )}
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="hpfe-pagination-container">
-        <Pagination
-          pageCount={fixedExpenses ? fixedExpenses.totalPages : 0}
-          range={2}
-          width={200}
-          forcePage={fixedExpenses?.number}
-          onChange={handlePageChange}
-        />
-      </div>
+          <div className="hpfe-pagination-container">
+            <Pagination
+              pageCount={fixedExpenses ? fixedExpenses.totalPages : 0}
+              range={2}
+              width={200}
+              forcePage={fixedExpenses?.number}
+              onChange={handlePageChange}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

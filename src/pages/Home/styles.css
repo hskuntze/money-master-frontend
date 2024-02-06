@@ -1,16 +1,16 @@
 .main-section {
   width: calc(100vw - 320px);
   height: inherit;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
 }
 
 .main-content {
   background-color: #148C54;
   color: #F2F0F2;
-  margin-top: 5px;
-  margin-left: 5px;
   width: calc(100vw - 325px);
-  height: calc(100vh - 80px - 10px);
-  border-radius: 10px;
+  min-height: calc(100vh - 80px - 10px);
   padding: 15px;
 }
 
@@ -20,7 +20,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .tebm-container {
@@ -37,4 +39,28 @@
   overflow: hidden;
   height: 530px;
   width: calc(100% - 15px);
+}
+
+.tebm-nothing-to-show {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 2.5rem;
+  height: 500px;
+  margin-top: 50px;
+}
+
+.create-new-total-expense-by-month {
+  margin-top: 5px;
+}
+
+.new-total-expense-by-month-button {
+  font-size: 0.87em;
+  background-color: #147045;
+  padding: 8px;
+  width: 250px;
+  height: 40px;
+  border-radius: 3px;
 }

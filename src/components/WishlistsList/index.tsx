@@ -1,21 +1,26 @@
 import "./styles.css";
-import WishlistItem from "components/WishlistItem";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { SpringPage } from "types/springpage";
 import { Wishlist } from "types/wishlist";
 import Pagination from "components/Pagination";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { saveWishlistData } from "util/storage";
+import { ThemeContext } from "ThemeContext";
+import WishlistEntry from "components/WishlistEntry";
 
 type ComponentData = {
   activePage: number;
   title: string;
 };
 
-const Wishlists = () => {
+interface Props {
+  sideElement?: boolean;
+}
+
+const WishlistsList = ({ sideElement = false }: Props) => {
   const [wishlists, setWishlists] = useState<SpringPage<Wishlist>>();
   const [componentData, setComponentData] = useState<ComponentData>({
     activePage: 0,
@@ -23,6 +28,20 @@ const Wishlists = () => {
   });
 
   const { register, handleSubmit, setValue } = useForm<ComponentData>();
+
+  const { themeContextData } = useContext(ThemeContext);
+
+  const handlePageChange = (pageNumber: number) => {
+    setComponentData({
+      activePage: pageNumber,
+      title: componentData.title,
+    });
+  };
+
+  const handleClearFilter = () => {
+    setValue("title", "");
+    onSubmit({ activePage: 0, title: "" });
+  };
 
   const loadInfo = useCallback(() => {
     const params: AxiosRequestConfig = {
@@ -50,18 +69,6 @@ const Wishlists = () => {
     loadInfo();
   }, [loadInfo]);
 
-  const handlePageChange = (pageNumber: number) => {
-    setComponentData({
-      activePage: pageNumber,
-      title: componentData.title,
-    });
-  };
-
-  const handleClearFilter = () => {
-    setValue("title", "");
-    onSubmit({ activePage: 0, title: "" });
-  };
-
   const onSubmit = (filter: ComponentData) => {
     const params: AxiosRequestConfig = {
       url: "/wishlists/user/filter",
@@ -83,47 +90,73 @@ const Wishlists = () => {
       });
   };
 
+  useEffect(() => {
+    const element = document.getElementById("wishlists-list") as HTMLDivElement;
+
+    if (themeContextData.theme === "dark") {
+      element.style.backgroundColor = "#073520";
+    } else {
+      element.style.backgroundColor = "#148C54";
+    }
+  }, [themeContextData.theme]);
+
   return (
-    <div className="wishlist-outter-container box-shadow side-element">
-      <div className="wishlist-header">
+    <div
+      id="wishlists-list"
+      className={`wishlist-outter-container box-shadow ${
+        sideElement === true
+          ? "side-wishlist-element"
+          : "whole-wishlist-element"
+      }`}
+    >
+      <div className={`wishlist-header ${sideElement ? "side-header" : "whole-header"}`}>
         <span className="wishlist-title">Wishlists</span>
         <div className="wishlist-component-filter">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="wishlist-componenet-filter-input">
+            <div className="wishlist-component-filter-input">
               <input type="text" placeholder="Filter" {...register("title")} />
               <button
                 type="button"
-                className="wishlist-componenet-filter-input-clear"
+                className="wishlist-component-filter-input-clear"
                 onClick={handleClearFilter}
               >
                 <i className="bi bi-x-circle" />
               </button>
             </div>
-            <button type="button" className="wishlist-componenet-filter-button">
+            <button type="button" className="wishlist-component-filter-button">
               <i className="bi bi-search" />
             </button>
           </form>
         </div>
       </div>
+      {/**
+       * AGORA É PRECISO AJUSTAR A EXIBIÇÃO DA LISTA QUANDO NÃO FOR UM ELEMENTO LATERAL.
+       * ATUALMENTE AS LISTAS SERÃO EXIBIDAS EM COLUNA VERTICAL, E PARA A PÁGINA 'WISHLISTS'
+       * O INTERESSANTE É DEIXAR UMA COLUNA HORIZONTAL.
+       */}
       <div className="wishlist-inner-container">
         {wishlists !== undefined &&
           wishlists.content.map((wishlist) => (
-            <WishlistItem
+            <WishlistEntry
               key={wishlist.id}
               id={wishlist.id}
               title={wishlist.title}
+              sideElement={sideElement}
+              elements={wishlist.items}
             />
           ))}
       </div>
-      <Pagination
-        pageCount={wishlists ? wishlists.totalPages : 0}
-        forcePage={wishlists?.number}
-        range={2}
-        onChange={handlePageChange}
-        width={230}
-      />
+      {wishlists?.numberOfElements && wishlists.numberOfElements > 5 && (
+        <Pagination
+          pageCount={wishlists ? wishlists.totalPages : 0}
+          forcePage={wishlists?.number}
+          range={2}
+          onChange={handlePageChange}
+          width={230}
+        />
+      )}
     </div>
   );
 };
 
-export default Wishlists;
+export default WishlistsList;
