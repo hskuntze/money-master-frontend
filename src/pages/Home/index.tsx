@@ -1,20 +1,23 @@
 import "./styles.css";
 import { AxiosRequestConfig } from "axios";
-import MyInfo from "components/MyInfo";
-import Vault from "components/Vault";
-import WishlistsList from "components/WishlistsList";
 import { requestBackend } from "util/requests";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { TotalExpenseByMonth as TotalExpenseByMonthType } from "types/totalexpensebymonth";
 import { SpringPage } from "types/springpage";
 import { toast } from "react-toastify";
-import TotalExpenseByMonth from "components/TotalExpenseByMonth";
 import { getMonthNameFromDate } from "util/formatters";
-import Pagination from "components/Pagination";
-import FixedExpenses from "components/FixedExpenses";
 import { useNavigate } from "react-router-dom";
 import { getTokenData } from "util/auth";
 import { ThemeContext } from "ThemeContext";
+
+import { TotalExpenseByMonth as TotalExpenseByMonthType } from "types/totalexpensebymonth";
+
+import MyInfo from "components/MyInfo";
+import Vault from "components/Vault";
+import TotalExpenseByMonth from "components/TotalExpenseByMonth";
+import Pagination from "components/Pagination";
+import FixedExpenses from "components/FixedExpenses";
+
+import WishlistList from "pages/Wishlists/WishlistList";
 
 type TebmComponentData = {
   activePage: number;
@@ -69,8 +72,11 @@ const Home = () => {
         toast.success("Success!");
       })
       .catch((err) => {
-        toast.error("Unable to create a new TEBM");
-        console.log(err);
+        if(err.response.data !== undefined) {
+          toast.error(err.response.data.message);
+        } else {
+          toast.error("Unable to create a new TEBM");
+        }
       });
   };
 
@@ -152,7 +158,7 @@ const Home = () => {
       <aside id="side-section" className="side-section">
         <MyInfo />
         <Vault />
-        <WishlistsList sideElement={true} />
+        <WishlistList sideElement={true} />
       </aside>
     </>
   );

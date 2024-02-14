@@ -121,6 +121,32 @@
   background-image: linear-gradient(to left, #178552, #156d44);
 }
 
+.underline {
+  text-decoration: underline;
+}
+
+.ml-1 {
+  margin-left: 5px;
+}
+
+.ml-2 {
+  margin-left: 10px;
+}
+
+.ml-3 {
+  margin-left: 20px;
+}
+
+.date-picker {
+  background-color: #f2f0f2;
+  border-radius: 10px;
+  border: 0;
+  margin: 2.5px 0;
+  padding-left: 7px;
+  width: 300px;
+  font-size: 15px;
+}
+
 @media (min-width: 576px) {
   .auth-input {
     height: 60px;
