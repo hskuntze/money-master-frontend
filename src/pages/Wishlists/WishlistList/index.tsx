@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { saveWishlistData } from "util/storage";
 import { ThemeContext } from "ThemeContext";
 import WishlistEntry from "components/WishlistEntry";
+import { Link } from "react-router-dom";
 
 type ComponentData = {
   activePage: number;
@@ -20,7 +21,7 @@ interface Props {
   sideElement?: boolean;
 }
 
-const WishlistsList = ({ sideElement = false }: Props) => {
+const WishlistList = ({ sideElement = false }: Props) => {
   const [wishlists, setWishlists] = useState<SpringPage<Wishlist>>();
   const [componentData, setComponentData] = useState<ComponentData>({
     activePage: 0,
@@ -49,7 +50,7 @@ const WishlistsList = ({ sideElement = false }: Props) => {
       method: "GET",
       withCredentials: true,
       params: {
-        size: 5,
+        size: sideElement ? 5 : 6,
         page: componentData.activePage,
         title: componentData.title,
       },
@@ -63,7 +64,11 @@ const WishlistsList = ({ sideElement = false }: Props) => {
       .catch((err) => {
         toast.error(err);
       });
-  }, [componentData]);
+  }, [componentData, sideElement]);
+
+  const handleWishlistItemUpdateAndDelete = () => {
+    loadInfo();
+  };
 
   useEffect(() => {
     loadInfo();
@@ -75,7 +80,7 @@ const WishlistsList = ({ sideElement = false }: Props) => {
       method: "GET",
       withCredentials: true,
       params: {
-        size: 5,
+        size: sideElement ? 5 : 6,
         page: componentData.activePage,
         title: filter.title,
       },
@@ -109,8 +114,19 @@ const WishlistsList = ({ sideElement = false }: Props) => {
           : "whole-wishlist-element"
       }`}
     >
-      <div className={`wishlist-header ${sideElement ? "side-header" : "whole-header"}`}>
+      <div
+        className={`wishlist-header ${
+          sideElement ? "side-header" : "whole-header"
+        }`}
+      >
         <span className="wishlist-title">Wishlists</span>
+        {!sideElement && (
+          <div className="wishlist-add-button-container">
+            <Link to={"/wishlists/create"} className="wishlist-add-button-wrapper">
+              <button className="wishlist-add-button">New wishlist</button>
+            </Link>
+          </div>
+        )}
         <div className="wishlist-component-filter">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="wishlist-component-filter-input">
@@ -129,11 +145,6 @@ const WishlistsList = ({ sideElement = false }: Props) => {
           </form>
         </div>
       </div>
-      {/**
-       * AGORA É PRECISO AJUSTAR A EXIBIÇÃO DA LISTA QUANDO NÃO FOR UM ELEMENTO LATERAL.
-       * ATUALMENTE AS LISTAS SERÃO EXIBIDAS EM COLUNA VERTICAL, E PARA A PÁGINA 'WISHLISTS'
-       * O INTERESSANTE É DEIXAR UMA COLUNA HORIZONTAL.
-       */}
       <div className="wishlist-inner-container">
         {wishlists !== undefined &&
           wishlists.content.map((wishlist) => (
@@ -141,22 +152,30 @@ const WishlistsList = ({ sideElement = false }: Props) => {
               key={wishlist.id}
               id={wishlist.id}
               title={wishlist.title}
+              description={wishlist.description}
+              toBuyAt={wishlist.toBuyAt}
+              totalValue={wishlist.totalValue}
+              enabled={wishlist.enabled}
+              installment={wishlist.installment}
               sideElement={sideElement}
               elements={wishlist.items}
+              onDelete={handleWishlistItemUpdateAndDelete}
+              onUpdate={handleWishlistItemUpdateAndDelete}
             />
           ))}
       </div>
-      {wishlists?.numberOfElements && wishlists.numberOfElements > 5 && (
-        <Pagination
-          pageCount={wishlists ? wishlists.totalPages : 0}
-          forcePage={wishlists?.number}
-          range={2}
-          onChange={handlePageChange}
-          width={230}
-        />
-      )}
+      {wishlists?.totalElements &&
+        wishlists.totalElements > (sideElement ? 5 : 6) && (
+          <Pagination
+            pageCount={wishlists ? wishlists.totalPages : 0}
+            forcePage={wishlists?.number}
+            range={2}
+            onChange={handlePageChange}
+            width={230}
+          />
+        )}
     </div>
   );
 };
 
-export default WishlistsList;
+export default WishlistList;

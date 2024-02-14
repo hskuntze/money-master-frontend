@@ -4,16 +4,24 @@
 }
 
 .side-wishlist-element {
+  width: 300px;
   height: 400px;
 }
 
 .whole-wishlist-element {
   margin: 5px auto;
-  height: calc(100vh - 74px - 10px);
+  min-height: calc(100vh - 74px - 10px);
 }
 
 .wishlist-outter-container .pagination-container {
   margin: 15px auto 0 auto;
+}
+
+.wishlist-inner-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
 }
 
 .wishlist-header {
@@ -39,8 +47,11 @@
 }
 
 .whole-header .wishlist-title {
-  width: 75%;
+  width: 65%;
   font-size: 26px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 .side-header .wishlist-component-filter {
@@ -48,9 +59,19 @@
   padding-top: 2px;
 }
 
+.wishlist-add-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10%;
+}
+
 .whole-header .wishlist-component-filter {
   width: 25%;
   padding-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 
 .wishlist-component-filter form {
@@ -104,4 +125,21 @@
 
 .wishlist-component-filter-input-clear {
   color: #313131;
+}
+
+.wishlist-add-button-wrapper {
+  width: 100%;
+}
+
+.wishlist-add-button {
+  width: 100%;
+  height: 40px;
+  background-color: #178552;
+  color: #f2f0f2;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.wishlist-add-button:hover {
+  background-color: #196b45;
 }

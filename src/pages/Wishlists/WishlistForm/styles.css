@@ -1,0 +1,115 @@
+.wishlist-form-outter-container {
+  background-color: #148c54;
+  height: calc(100vh - 84px);
+  margin: 5px auto;
+}
+
+.wishlist-form-inner-container {
+  height: 100%;
+  width: 50vw;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wishlist-form {
+  width: 75%;
+}
+
+.wishlist-form-container-title {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: #f2f0f2;
+  margin: 15px 0;
+}
+
+.wishlist-form-input-container {
+  margin: 10px auto;
+}
+
+.wishlist-form-input {
+  border-radius: 4px;
+  border: none;
+  height: 50px;
+  width: 100%;
+  padding-left: 5px;
+  color: #313131;
+  background-color: #f2f0f2;
+}
+
+.wishlist-form-textarea {
+  min-height: 70px;
+  padding-top: 5px;
+}
+
+.wishlist-form-date-picker {
+  height: 50px;
+  width: 300px;
+  color: #313131;
+  border-radius: 4px;
+}
+
+.wishlist-form-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  height: 50px;
+}
+
+.wishlist-form-checkbox-auxdiv {
+  height: 50px;
+  width: 50px;
+  background-color: #f2f0f2;
+  margin-right: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wishlist-form-checkbox-wrapper input {
+  width: 20px;
+  height: 20px;
+}
+
+.wishlist-form-checkbox-wrapper label {
+  color: #313131;
+}
+
+.wishlist-checkbox {
+  height: 20px;
+}
+
+.wishlist-form-footer-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.wishlist-form-footer-buttons button {
+  width: 100px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 0 7px;
+}
+
+.wishlist-form-save-button {
+  background-color: #02733e;
+  color: #f2f0f2;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.wishlist-form-save-button:hover {
+  background-color: #15643f;
+}
+
+.wishlist-form-cancel-button {
+  color: #313131;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.wishlist-form-cancel-button:hover {
+  background-color: #c23333;
+}

@@ -8,6 +8,7 @@ import { ThemeContext, ThemeContextData } from "ThemeContext";
 import ExpenseTrack from "pages/ExpenseTrack";
 import PrivateRoute from "PrivateRoute";
 import Wishlists from "pages/Wishlists";
+import Items from "pages/Items";
 
 const Routes = () => {
   const [themeContextData, setThemeContextData] = useState<ThemeContextData>({
@@ -34,7 +35,7 @@ const Routes = () => {
               element={<ConfirmRegistration />}
             />
             <Route
-              path="/wishlists"
+              path="/wishlists/*"
               element={
                 <PrivateRoute roles={["ROLE_ADMIN", "ROLE_USER"]}>
                   <Wishlists />
@@ -46,6 +47,14 @@ const Routes = () => {
               element={
                 <PrivateRoute roles={["ROLE_ADMIN", "ROLE_USER"]}>
                   <ExpenseTrack />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/items/*"
+              element={
+                <PrivateRoute roles={["ROLE_ADMIN", "ROLE_USER"]}>
+                  <Items />
                 </PrivateRoute>
               }
             />

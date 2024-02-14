@@ -82,7 +82,7 @@ const TotalExpenseByMonth = ({
           {variableExpenses.map((ve) => (
             <div className="tebm-variable-expense" key={ve.id}>
               <span>
-                [{formatStringToDate(ve.dateOfCharge)}] {ve.title},{" "}
+                [{formatStringToDate(ve.dateOfCharge)}] {ve.title}{" "}
                 {formatNumberToMoney(ve.price)}
               </span>
             </div>

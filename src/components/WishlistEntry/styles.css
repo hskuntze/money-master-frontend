@@ -44,115 +44,179 @@
 * ----- WHOLE ENTRY -----
 */
 
+/*
+  CARD OUTTER CONTAINER
+*/
 .whole-entry {
-  width: 32%;
+  width: 95%;
   height: 600px;
+  margin: 1% 2.5%;
 }
 
+/*
+  CARD INNER CONTAINER
+*/
 .wishlist-whole-entry {
   background-image: linear-gradient(to left, #178552, #156d44);
   border-radius: 4px;
   width: 100%;
   height: inherit;
   color: #f2f0f2;
-  padding: 8px;
   display: flex;
-  flex-direction: column;
 }
 
-.wishlisy-whole-entry-header {
+.wishlist-whole-entry-left {
   display: flex;
-  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28%;
+}
+
+.wishlist-whole-entry-right {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 72%;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .wweh-title {
+  text-align: center;
+  width: 100%;
+  height: auto;
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.wweh-description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  width: 100%;
+  min-height: 180px;
+  max-height: 230px;
+  padding: 10px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.wweh-data {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.wwel-button {
   display: flex;
   align-items: center;
   justify-content: start;
-  width: 80%;
-  height: 25px;
-  text-decoration: underline;
-  font-size: 19px;
-  font-weight: 500;
-  padding-left: 5px;
-  padding-top: 5px;
-}
-
-.wweh-edit {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  width: 20%;
-  height: 25px;
-  padding-right: 5px;
-  padding-top: 5px;
   font-weight: 300;
+  padding: 10px;
   text-decoration: underline transparent;
   transition: text-decoration 0.3s ease-in;
 }
 
-.wweh-edit:hover {
+.wwel-button:hover {
   text-decoration: underline;
 }
 
+.wwel-row {
+  display: flex;
+}
+
+.wwel-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .wishlist-whole-entry-item {
-  min-height: 80px;
-  max-height: 120px;
-  margin: 10px 0;
+  min-height: 200px;
+  max-height: 250px;
+  margin-bottom: 5px;
   transition: box-shadow 0.3s ease-in;
   border: 1px solid #36363633;
   border-radius: 4px;
+  display: flex;
 }
 
 .wishlist-whole-entry-item:hover {
   box-shadow: 0px 0px 6px 4px #36363633;
 }
 
+.wwei-left {
+  width: calc(26% + 10px);
+  height: auto;
+}
+
+.wwei-img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.wwei-img img {
+  border-radius: 4px 0px 0px 4px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.87;
+}
+
+.wwei-right {
+  width: calc(74% - 10px);
+  padding-left: 10px;
+  height: auto;
+}
+
+.wwei-right-buttons {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  height: 25.5px;
+}
+
 .wwei-title {
-  height: 25px;
+  height: 35px;
   font-size: 17px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   overflow: hidden;
   position: relative;
 }
 
 .wwei-title span {
-  margin: 3px;
   white-space: nowrap;
-  position: absolute;
-  animation: letreiro 11s linear infinite;
-}
-
-.wwei-title:hover span {
-  animation: unset;
-}
-
-@keyframes letreiro {
-  0% {
-    right: -120%;
-  }
-  100% {
-    right: 120%;
-  }
 }
 
 .wwei-title::-webkit-scrollbar {
   display: none;
 }
 
-.wwei-price-and-link {
-  margin: 3px;
+.wwei-right-button {
+  width: 35px;
+  font-size: 20px;
+}
+
+.wwei-price-and-source {
+  height: 30px;
   display: flex;
+  align-items: center;
 }
 
 .wwei-price {
-  height: 20px;
   font-size: 15px;
 }
 
 .wwei-link {
-  margin-left: 5px;
-  height: 20px;
+  height: 30px;
+  display: flex;
+  align-items: center;
   font-size: 15px;
   text-decoration: underline transparent;
   transition: text-decoration 0.3s ease-in;
@@ -163,8 +227,15 @@
 }
 
 .wwei-source-name {
-  margin: 3px;
+  margin-left: 5px;
   font-size: 13px;
   color: #d4cdcdcc;
   font-style: italic;
+}
+
+.wwei-item-history {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
 }
