@@ -159,7 +159,7 @@ const WishlistEntry = ({
                 </div>
               </div>
               <div className="wwel-row">
-                <Link className="wwel-button" to={`/items`}>
+                <Link className="wwel-button" to={`/items/${id}`}>
                   Add item
                 </Link>
                 <Link className="wwel-button" to={`/wishlists/${id}`}>
