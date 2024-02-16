@@ -1,0 +1,5 @@
+.items-page-content {
+  width: calc(100vw - 10px);
+  min-height: calc(100vh - 10px - 74px);
+  margin: 5px;
+}
